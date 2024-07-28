@@ -1,0 +1,37 @@
+.stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;;
+  margin: 20px 0;
+  flex-wrap: nowrap;
+}
+
+.stat-item {
+  background-color: black;
+    padding: 30px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    height: 70px;
+    border: 2px solid gray;
+    width: 156px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.stat-item h3 {
+  margin: 0;
+  font-size: 1.05em;
+  color: white;
+  border-bottom: 2px solid #929292;
+  font: inherit;
+  margin-top: -16px;
+    padding: 8px;
+}
+
+.stat-item p {
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  margin-top: 20px;
+  font: inherit;
+  font-size: small;
+}

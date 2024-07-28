@@ -1,0 +1,113 @@
+.trackmovies-container {
+    padding: 20px;
+    width: 1100px;
+    min-height: 696px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+}
+
+.trackmovies-list0 {
+    display: flex;
+    align-items: center;
+}
+
+.trackmovies-back-button {
+    margin-right: 20px;
+    padding: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border: 5px;
+}
+
+.trackmovies-filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.trackmovies-filter-container button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4757;
+    color: #fefefe;
+    border-radius: 5px;
+}
+
+.trackmovies-filter-container button.active {
+    background-color: #333;
+    color: #fff;
+}
+
+.trackmovies-grid {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid rgb(67, 67, 67);
+}
+
+.trackmovies-item {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 160px;
+    background-color: black;
+    position: relative;  /* Added for positioning the text */
+}
+
+.trackmovies-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.trackmovies-itemp {
+    position: absolute;
+    top: 218px;
+    left: 49px;
+    margin: 0;
+    color: white;
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+.trackmovies-item.watch-list img {
+    filter: none;
+}
+
+.trackmovies-item.upcoming img {
+    filter: brightness(0.75);
+}
+
+.trackmovies-back-title {
+    margin: 0;
+    padding: 10px;
+    color: #ff4757;
+    margin-right: auto;
+    margin-left: 366px;
+    font-size: xx-large;
+}
+
+.discover-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.discover-more-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: black;
+    color: #fefefe;
+    border-radius: 30px;
+    border-style: groove;
+    border-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}

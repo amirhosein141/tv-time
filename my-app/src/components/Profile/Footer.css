@@ -1,0 +1,30 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 1100px;
+  border-top: 1px solid #929292;
+  background-color: black;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.footer-item {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-item a {
+  background: none;
+  border: none;
+  color: #c6c4c4;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.footer-item a:hover {
+  color: #fff;
+}

@@ -1,0 +1,183 @@
+/* Global Styling */
+body {
+    font-family: 'Roboto', sans-serif; /* Consistent font for better readability */
+}
+
+/* Container for the movie details */
+.singlemovie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 900px;
+    background-color: #121212; /* Darker background for better contrast */
+    height: 97vh;
+    padding-bottom: 20px;
+    position: relative; /* Ensure that the back button can be positioned relative to this container */
+}
+
+/* Styling for the movie card */
+.single-movie-card {
+    background-color: #1e1e1e; /* Slightly lighter than the container */
+    border-radius: 15px; /* More rounded corners for a modern look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for better depth */
+    margin: 30px 0;
+    padding: 20px;
+    width: 100%; /* Full width to utilize available space */
+    max-width: 800px; /* Maximum width for better responsiveness */
+    display: flex;
+    height: 87vh; /* Allow content to define height */
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Container for movie image and details */
+.movie-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Content area with movie details */
+.single-movie-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+/* Styling for the movie image */
+.single-movie-image {
+    width: 300px;
+    height: auto;
+    border-radius: 15px; /* Consistent with card corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the image */
+}
+
+/* Title of the movie */
+.single-movie-title {
+    font-size: 30px;
+    margin-top: 14px;
+    margin-bottom: 20px;
+    color: #ff4757;
+    max-width: 317px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Description of the movie */
+.single-movie-description {
+    font-size: 18px;
+    color: #e0e0e0; /* Lighter color for readability */
+    margin-top: 20px;
+    width: 100%;
+    line-height: 1.6; /* Improved readability */
+    font-family: 'Open Sans', sans-serif; /* Better readability font */
+    border-top: 2px solid #929292 ; /* Decorative border */
+    padding-top: 20px; /* Spacing from the top border */
+}
+
+/* Movie info sections */
+.single-movie-info {
+    font-size: 18px;
+    color: #d0d0d0; /* Slightly lighter than description for distinction */
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif; /* More elegant font for information */
+}
+
+/* List styling within movie info */
+.single-movie-info ul {
+    padding-left: 20px;
+    margin: 0;
+    list-style-type: disc;
+}
+
+.single-movie-info li {
+    color: #d0d0d0;
+    font-size: 16px;
+    margin-bottom: 5px; /* Space between list items */
+}
+
+/* Styling for the status toggle button */
+.status-toggle-button {
+    padding: 12px 24px; /* Larger padding for a more button-like appearance */
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 30px; /* Fully rounded button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: absolute;
+    top: 79px; /* Adjusted to position below the back button */
+    right: 49px;
+}
+
+.status-toggle-button.not-watched {
+    background-color: #ff4757;
+}
+
+.status-toggle-button.watched {
+    background-color: #2ed573;
+}
+
+.status-toggle-button:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Styling for the back button */
+.back-button {
+    position: absolute;
+    top: 31px;
+    right: 33px;
+    background-color: #1e1e1e; /* Darker background for the button */
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%; /* Circular button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #555; /* Lighter color on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+.single-movie-description1{
+    font-size: 20px;
+}
+/* Container for movie card buttons */
+.movie-buttons-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+    margin-top: 20px; /* Spacing between buttons */
+}
+
+/* Styling for the add/remove movie button */
+.user-list-toggle-button {
+    padding: 12px 15px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: 653px;
+    margin-top: 96px;
+    position: absolute;
+}
+
+/* Add movie button styles */
+.user-list-toggle-button.add {
+    background-color: #007bff; /* Blue color for add button */
+}
+
+/* Remove movie button styles */
+.user-list-toggle-button.remove {
+    background-color: #dc3545; /* Red color for remove button */
+}
+
+.user-list-toggle-button:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

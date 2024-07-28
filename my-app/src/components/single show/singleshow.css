@@ -1,0 +1,212 @@
+
+.single-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 900px;
+    background-color: #121212; /* Darker background for better contrast */
+    height: auto;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.single-show-card {
+    background-color: #1e1e1e; /* Slightly lighter than the container */
+    border-radius: 15px; /* More rounded corners for a modern look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for better depth */
+    margin: 30px 0;
+    padding: 20px;
+    width: 100%; /* Full width to utilize available space */
+    max-width: 800px; /* Maximum width for better responsiveness */
+    display: flex;
+    height: auto; /* Allow content to define height */
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.show-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.single-show-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.single-show-image {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.single-show-title {
+    font-size: 35px;
+    margin-top: -8px;
+    margin-bottom: 45px;
+    color: #ff4757;
+}
+
+.single-show-description {
+    font-size: 20px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    border-top: 2px solid #929292;
+}
+.single-show-description p {
+    font-size: 20px;
+}
+
+.single-show-info {
+    font-size: 18px;
+    color: #d0d0d0;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.single-show-info ul {
+    padding-left: 20px;
+    margin: 0;
+    list-style-type: disc;
+}
+
+.single-show-info li {
+    color: white;
+    font-size: 18px;
+}
+
+.show-list-button {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.show-list-button:hover {
+    background-color: #ff6b81;
+}
+.episode-list {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.episode-list h3 {
+    font-size: 28px;
+    color: #ff4757;
+    margin-bottom: 15px;
+}
+
+.episode-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.episode-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: white;
+}
+
+.episode-list li button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.episode-list li button.watched {
+    background-color: green;
+    color: white;
+}
+
+.episode-list li button.not-watched {
+    background-color: white; /* Different color for not watched */
+    color: black;
+}
+
+.episode-list li button::before {
+    content: '✓'; /* Always display checkmark */
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.singleshow-back-button {
+    position: absolute;
+    top: 36px;
+    right: 30px;
+    background-color: #1e1e1e; /* Darker background for the button */
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%; /* Circular button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.singleshow-back-button:hover {
+    background-color: #555; /* Lighter color on hover */
+    transform: scale(1.1);
+}
+/* Styling for the add/remove show button */
+.show-list-toggle-button {
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px; /* Space between status and add/remove button */
+    position: absolute;
+    top: 90px;
+    right: 50px; /* Adjust the position accordingly */
+}
+
+/* Add show button styles */
+.show-list-toggle-button.add {
+    background-color: #007bff; /* Blue color for add button */
+}
+
+/* Remove show button styles */
+.show-list-toggle-button.remove {
+    background-color: #dc3545; /* Red color for remove button */
+}
+
+.show-list-toggle-button:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

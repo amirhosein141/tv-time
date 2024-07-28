@@ -1,0 +1,40 @@
+/* src/components/Movies/Movies.css */
+.movies {
+  margin: 20px 0;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.movie-item {
+  background-color: black;
+    padding: 0px;
+    border-radius: 10px;
+    width: 162px;
+}
+
+.movie-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.allmovies-button {
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 23px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.allmovies-button:hover {
+  background-color: black;
+}
+.allmovies-button-container{
+  display: flex;
+  flex-direction: row-reverse;
+}
+

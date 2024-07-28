@@ -1,0 +1,24 @@
+/* src/components/Shows/Shows.css */
+.shows {
+  margin: 20px 0;
+}
+
+.show-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.show-item {
+  background-color: black;
+    padding: 0px;
+    border-radius: 10px;
+    width: 162px;
+}
+
+.show-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+

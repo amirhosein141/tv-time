@@ -1,0 +1,79 @@
+.allmovies-container {
+    padding: 20px;
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+  }
+  
+  .show-list0 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .allmovies-back-button {
+    margin-right: 20px;
+    padding: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border: 5px;
+  }
+  
+  .allmovies-filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #929292;;
+    padding: 10px;
+  }
+  
+  .allmovies-filter-container button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4757;
+    color: #fefefe;
+    border-radius: 5px;
+    
+  }
+  
+  .allmovies-filter-container button.active {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .allmovies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    min-height: 569px;
+  }
+  
+  .allmovies-item {
+    border: 1px solid black;
+    padding: 2px;
+    border-radius: 10px;
+    text-align: center;
+    width: 160px;
+    height: fit-content;
+    background-color: black;
+  }
+  
+  .allmovies-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+.allmovies-back-title{
+    margin: 0;
+    padding: 10px;
+    color: #ff4757;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: xx-large;
+}

@@ -1,0 +1,61 @@
+.login-container0{
+  width: 900px;
+  height: 100vh;
+  margin: 0 auto;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../photo_2024-07-16_21-01-24.jpg'); /* عکس پس‌زمینه را اینجا قرار دهید */
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.login-container {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #2c2c22;
+  border-radius: 10px;
+  background-color: #2c2c2e;
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: large;
+}
+
+.login-container input {
+  width: 93%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff4757;
+  color: white;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: #ff4757;
+}
+
+.switch-button {
+  background-color: transparent;
+  color: #ff4757;
+  border: none;
+  cursor: pointer;
+}
+
+.switch-button:hover {
+  color: #ff4757;
+}
