@@ -54,7 +54,7 @@ const Discover = () => {
 
     const handleAddClick = (id, type) => {
         const token = localStorage.getItem('token');
-        const url = type === 'show' ? 'https://amirghost14.pythonanywhere.com/api/user_shows/' : 'http://amirghost14.pythonanywhere.com/api/user_movies/';
+        const url = type === 'show' ? 'https://amirghost14.pythonanywhere.com/api/user_shows/' : 'https://amirghost14.pythonanywhere.com/api/user_movies/';
         const data = type === 'show' ? { show: id } : { movie: id };
 
         if (type === 'show') {

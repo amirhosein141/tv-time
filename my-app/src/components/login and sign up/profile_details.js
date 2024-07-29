@@ -9,7 +9,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get('http://amirghost14.pythonanywhere.com/api/user/', {
+                const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user/', {
                     headers: {
                         'Authorization': `Token ${localStorage.getItem('token')}`
                     }
