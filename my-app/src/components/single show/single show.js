@@ -13,7 +13,7 @@ const ShowList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/shows/${id}/`)
+        axios.get(`http://amirghost14.pythonanywhere.com/api/shows/${id}/`)
             .then(response => {
                 setShow(response.data);
             })
@@ -22,7 +22,7 @@ const ShowList = () => {
             });
 
         // Check if the show is in the user's list
-        axios.get(`http://localhost:8000/api/user_shows/`, {
+        axios.get(`http://amirghost14.pythonanywhere.com/api/user_shows/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -44,7 +44,7 @@ const ShowList = () => {
         if (showEpisodes) {
             setShowEpisodes(false);
         } else {
-            axios.get(`http://localhost:8000/api/shows/${id}/episodes/`)
+            axios.get(`http://amirghost14.pythonanywhere.com/api/shows/${id}/episodes/`)
                 .then(response => {
                     setEpisodes(response.data);
                     setShowEpisodes(true);
@@ -56,7 +56,7 @@ const ShowList = () => {
     };
 
     const updateShowStatus = (newStatus) => {
-        axios.patch(`http://localhost:8000/api/shows/${id}/status/`, { status: newStatus })
+        axios.patch(`http://amirghost14.pythonanywhere.com/api/shows/${id}/status/`, { status: newStatus })
             .then(response => {
                 setShow(prevShow => ({ ...prevShow, status: newStatus }));
             })
@@ -69,7 +69,7 @@ const ShowList = () => {
         const newStatus = currentStatus === 'watched' ? 'not_watched' : 'watched';
         const todayDate = new Date().toISOString().split('T')[0]; // تاریخ امروز به فرمت YYYY-MM-DD
 
-        axios.patch(`http://localhost:8000/api/episodes/${episodeId}/status/`, { status: newStatus, last_watched: todayDate })
+        axios.patch(`http://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/status/`, { status: newStatus, last_watched: todayDate })
             .then(response => {
                 setEpisodes(prevEpisodes =>
                     prevEpisodes.map(ep => ep.id === episodeId ? { ...ep, status: newStatus, last_watched: todayDate } : ep)
@@ -96,7 +96,7 @@ const ShowList = () => {
     };
 
     const handleUserListToggle = () => {
-        const url = `http://localhost:8000/api/user_shows/`;
+        const url = `http://amirghost14.pythonanywhere.com/api/user_shows/`;
         const data = { show: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,

@@ -1,6 +1,7 @@
 .trackmovies-container {
     padding: 20px;
-    width: 1100px;
+    width: 100%;
+    max-width: 1100px;
     min-height: 696px;
     margin-left: auto;
     margin-right: auto;
@@ -10,6 +11,7 @@
 .trackmovies-list0 {
     display: flex;
     align-items: center;
+    flex-wrap: wrap; /* Added for wrapping */
 }
 
 .trackmovies-back-button {
@@ -26,10 +28,11 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    flex-wrap: wrap; /* Added for wrapping */
 }
 
 .trackmovies-filter-container button {
-    margin: 0 10px;
+    margin: 5px 10px; /* Adjusted margin for better spacing */
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -46,6 +49,7 @@
 
 .trackmovies-grid {
     display: flex;
+    flex-wrap: wrap; /* Added for wrapping */
     gap: 20px;
     border-bottom: 1px solid rgb(67, 67, 67);
 }
@@ -55,7 +59,8 @@
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    width: 160px;
+    width: 100%;
+    max-width: 160px; /* Ensures a max width */
     background-color: black;
     position: relative;  /* Added for positioning the text */
 }
@@ -88,8 +93,7 @@
     margin: 0;
     padding: 10px;
     color: #ff4757;
-    margin-right: auto;
-    margin-left: 366px;
+    margin-left: 372px;
     font-size: xx-large;
 }
 
@@ -110,4 +114,56 @@
     border-color: white;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .trackmovies-back-button {
+        font-size: 20px;
+    }
+
+    .trackmovies-back-title {
+        font-size: large;
+        margin-left: auto;
+    }
+
+    .trackmovies-item {
+        max-width: 140px;
+    }
+
+    .trackmovies-itemp {
+        font-size: 20px;
+        top: 190px;
+        left: 40px;
+    }
+
+    .discover-more-button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .trackmovies-back-button {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    .trackmovies-back-title {
+        font-size: medium;
+        margin-left: auto;
+    }
+
+    .trackmovies-item {
+        max-width: 120px;
+    }
+
+    .trackmovies-itemp {
+        font-size: 18px;
+        top: 170px;
+        left: 35px;
+    }
+
+    .discover-more-button {
+        font-size: 12px;
+    }
 }

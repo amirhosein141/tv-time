@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
+    baseURL: 'http://amirghost14.pythonanywhere.com/api/',
     timeout: 5000,
     headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,

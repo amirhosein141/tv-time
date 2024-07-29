@@ -8,7 +8,7 @@ const Movies = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/user_movies/', {
+    fetch('http://amirghost14.pythonanywhere.com/api/user_movies/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,
       },
@@ -28,7 +28,7 @@ const Movies = () => {
   useEffect(() => {
     if (userMovies.length > 0) {
       const movieRequests = userMovies.map(userMovie => 
-        fetch(`http://127.0.0.1:8000/api/movies/${userMovie.movie}/`)
+        fetch(`http://amirghost14.pythonanywhere.com/api/movies/${userMovie.movie}/`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');

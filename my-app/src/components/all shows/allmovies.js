@@ -20,7 +20,7 @@ const AllShows = () => {
 
   const fetchUserMovies = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user_movies/', {
+      const response = await axios.get('http://amirghost14.pythonanywhere.com/api/user_movies/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -28,7 +28,7 @@ const AllShows = () => {
       const userMovies = response.data;
 
       const movieRequests = userMovies.map(userMovie =>
-        axios.get(`http://127.0.0.1:8000/api/movies/${userMovie.movie}/`)
+        axios.get(`http://amirghost14.pythonanywhere.com/api/movies/${userMovie.movie}/`)
       );
 
       const moviesResponses = await Promise.all(movieRequests);
@@ -60,7 +60,7 @@ const AllShows = () => {
     <div className="allmovies-container">
       <div className='show-list0'>
         <button className="allmovies-back-button" onClick={handleBackClick}>{'<'}</button>
-        <h2 className='allmovies-back-title'>Shows</h2>
+        <h2 className='allmovies-back-title'>Movies</h2>
       </div>
       <div className="allmovies-filter-container">
         <button onClick={() => setFilter('all')} className={filter === 'all' ? 'active' : ''}>All</button>

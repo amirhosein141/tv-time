@@ -20,7 +20,7 @@ const AllShows = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user_shows/', {
+      const response = await axios.get('http://amirghost14.pythonanywhere.com/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -28,7 +28,7 @@ const AllShows = () => {
       const userShows = response.data;
 
       const showRequests = userShows.map(userShow =>
-        axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/`)
+        axios.get(`http://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
       );
 
       const showsResponses = await Promise.all(showRequests);
