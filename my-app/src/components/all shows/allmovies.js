@@ -20,7 +20,7 @@ const AllShows = () => {
 
   const fetchUserMovies = async () => {
     try {
-      const response = await axios.get('http://amirghost14.pythonanywhere.com/api/user_movies/', {
+      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_movies/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -28,7 +28,7 @@ const AllShows = () => {
       const userMovies = response.data;
 
       const movieRequests = userMovies.map(userMovie =>
-        axios.get(`http://amirghost14.pythonanywhere.com/api/movies/${userMovie.movie}/`)
+        axios.get(`https://amirghost14.pythonanywhere.com/api/movies/${userMovie.movie}/`)
       );
 
       const moviesResponses = await Promise.all(movieRequests);

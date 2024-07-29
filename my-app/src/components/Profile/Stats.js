@@ -8,7 +8,7 @@ const Stats = () => {
   const [tvTime, setTvTime] = useState({ months: 0, days: 0, hours: 0 });
 
   useEffect(() => {
-    fetch('http://amirghost14.pythonanywhere.com/api/user_movies/', {
+    fetch('https://amirghost14.pythonanywhere.com/api/user_movies/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,
       },
@@ -42,7 +42,7 @@ const Stats = () => {
       })
       .catch(error => console.error('Error fetching movies:', error));
 
-    fetch('http://amirghost14.pythonanywhere.com/api/user_shows/', {
+    fetch('https://amirghost14.pythonanywhere.com/api/user_shows/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,
       },
@@ -56,7 +56,7 @@ const Stats = () => {
 
         // دریافت اپیزودها برای هر سریال
         const fetchEpisodesPromises = data.map(show =>
-          fetch(`http://amirghost14.pythonanywhere.com/api/shows/${show.show}/episodes/`, {
+          fetch(`https://amirghost14.pythonanywhere.com/api/shows/${show.show}/episodes/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },

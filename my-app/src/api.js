@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://amirghost14.pythonanywhere.com/api/';
+const API_URL = 'https://amirghost14.pythonanywhere.com/api/';
 
 export const fetchShows = async () => {
   try {

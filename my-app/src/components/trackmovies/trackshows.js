@@ -16,7 +16,7 @@ const TrackShow = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('http://amirghost14.pythonanywhere.com/api/user_shows/', {
+      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -24,12 +24,12 @@ const TrackShow = () => {
 
       const showsData = await Promise.all(
         response.data.map(async (userShow) => {
-          const showResponse = await axios.get(`http://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`, {
+          const showResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
           });
-          const episodesResponse = await axios.get(`http://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
+          const episodesResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -51,7 +51,7 @@ const TrackShow = () => {
   const toggleEpisodeStatus = async (episodeId, currentStatus, showId) => {
     const newStatus = currentStatus === 'watched' ? 'not_watched' : 'watched';
     try {
-      await axios.patch(`http://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/status/`, { status: newStatus }, {
+      await axios.patch(`https://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/status/`, { status: newStatus }, {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -69,7 +69,7 @@ const TrackShow = () => {
           const newShowStatus = allEpisodesWatched ? 'watched' : (anyEpisodeWatched ? 'watching' : 'not_watched');
 
           if (show.status !== newShowStatus) {
-            axios.patch(`http://amirghost14.pythonanywhere.com/api/shows/${showId}/status/`, { status: newShowStatus }, {
+            axios.patch(`https://amirghost14.pythonanywhere.com/api/shows/${showId}/status/`, { status: newShowStatus }, {
               headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
               },

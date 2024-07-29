@@ -16,21 +16,21 @@ const Discover = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        axios.get('http://amirghost14.pythonanywhere.com/api/shows/')
+        axios.get('https://amirghost14.pythonanywhere.com/api/shows/')
             .then(response => setShows(response.data))
             .catch(error => console.error('Error fetching shows:', error));
 
-        axios.get('http://amirghost14.pythonanywhere.com/api/movies/')
+        axios.get('https://amirghost14.pythonanywhere.com/api/movies/')
             .then(response => setMovies(response.data))
             .catch(error => console.error('Error fetching movies:', error));
         
-        axios.get('http://amirghost14.pythonanywhere.com/api/user_shows/', {
+        axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
             headers: { 'Authorization': `Token ${token}` }
         })
         .then(response => setAddedShows(response.data))
         .catch(error => console.error('Error fetching user shows:', error));
         
-        axios.get('http://amirghost14.pythonanywhere.com/api/user_movies/', {
+        axios.get('https://amirghost14.pythonanywhere.com/api/user_movies/', {
             headers: { 'Authorization': `Token ${token}` }
         })
         .then(response => setAddedMovies(response.data))
@@ -54,7 +54,7 @@ const Discover = () => {
 
     const handleAddClick = (id, type) => {
         const token = localStorage.getItem('token');
-        const url = type === 'show' ? 'http://amirghost14.pythonanywhere.com/api/user_shows/' : 'http://amirghost14.pythonanywhere.com/api/user_movies/';
+        const url = type === 'show' ? 'https://amirghost14.pythonanywhere.com/api/user_shows/' : 'http://amirghost14.pythonanywhere.com/api/user_movies/';
         const data = type === 'show' ? { show: id } : { movie: id };
 
         if (type === 'show') {

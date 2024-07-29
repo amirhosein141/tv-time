@@ -18,7 +18,7 @@ const Shows = () => {
   }, [userShows]);
 
   const fetchUserShows = () => {
-    fetch('http://amirghost14.pythonanywhere.com/api/user_shows/', {
+    fetch('https://amirghost14.pythonanywhere.com/api/user_shows/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,
       },
@@ -32,10 +32,10 @@ const Shows = () => {
 
   const fetchShowsData = () => {
     const showRequests = userShows.map(userShow => 
-      fetch(`http://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
+      fetch(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
         .then(response => response.json())
         .then(show => 
-          fetch(`http://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
+          fetch(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -77,7 +77,7 @@ const Shows = () => {
   };
 
   const handleEpisodeWatched = (showId, episodeId) => {
-    fetch(`http://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/`, {
+    fetch(`https://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`,

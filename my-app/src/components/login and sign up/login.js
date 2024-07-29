@@ -10,7 +10,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://amirghost14.pythonanywhere.com/api/login/', {
+            const response = await axios.post('https://amirghost14.pythonanywhere.com/api/login/', {
                 username,
                 password
             });

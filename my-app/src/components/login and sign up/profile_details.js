@@ -32,7 +32,7 @@ const Profile = () => {
             formData.append('userprofile.profile_picture', profilePicture);
         }
         try {
-            const response = await axios.patch('http://amirghost14.pythonanywhere.com/api/user/', formData, {
+            const response = await axios.patch('https://amirghost14.pythonanywhere.com/api/user/', formData, {
                 headers: {
                     'Authorization': `Token ${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'

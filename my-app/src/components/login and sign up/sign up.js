@@ -11,7 +11,7 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://amirghost14.pythonanywhere.com/api/register/', {
+            const response = await axios.post('https://amirghost14.pythonanywhere.com/api/register/', {
                 username,
                 email,
                 password

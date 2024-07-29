@@ -11,7 +11,7 @@ const MovieDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://amirghost14.pythonanywhere.com/api/movies/${id}/`)
+        axios.get(`https://amirghost14.pythonanywhere.com/api/movies/${id}/`)
             .then(response => {
                 setMovie(response.data);
             })
@@ -20,7 +20,7 @@ const MovieDetail = () => {
             });
 
         // Check if the movie is in the user's list
-        axios.get(`http://amirghost14.pythonanywhere.com/api/user_movies/`, {
+        axios.get(`https://amirghost14.pythonanywhere.com/api/user_movies/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -41,7 +41,7 @@ const MovieDetail = () => {
     const handleStatusToggle = () => {
         const newStatus = movie.status === 'watched' ? 'not_watched' : 'watched';
 
-        axios.patch(`http://amirghost14.pythonanywhere.com/api/movies/${id}/status/`, { status: newStatus }, {
+        axios.patch(`https://amirghost14.pythonanywhere.com/api/movies/${id}/status/`, { status: newStatus }, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const MovieDetail = () => {
     };
 
     const handleUserListToggle = () => {
-        const url = `http://amirghost14.pythonanywhere.com/api/user_movies/`;
+        const url = `https://amirghost14.pythonanywhere.com/api/user_movies/`;
         const data = { movie: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,
