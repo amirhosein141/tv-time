@@ -20,20 +20,23 @@ const AllShows = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
+      const response = await axios.get('http://127.0.0.1:8000/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
       });
       const userShows = response.data;
 
+      // ساختن لیست درخواست‌ها برای دریافت داده‌های مربوط به هر سریال
       const showRequests = userShows.map(userShow =>
-        axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
+        axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/`)
+          .then(response => ({
+            ...response.data,
+            status: userShow.status // اضافه کردن status به داده‌های سریال
+          }))
       );
 
-      const showsResponses = await Promise.all(showRequests);
-      const showsData = showsResponses.map(response => response.data);
-
+      const showsData = await Promise.all(showRequests);
       setShows(showsData);
     } catch (error) {
       console.error('Error fetching user shows:', error);
@@ -66,7 +69,7 @@ const AllShows = () => {
         <button onClick={() => setFilter('all')} className={filter === 'all' ? 'active' : ''}>All</button>
         <button onClick={() => setFilter('watching')} className={filter === 'watching' ? 'active' : ''}>Watching</button>
         <button onClick={() => setFilter('not_watched')} className={filter === 'not_watched' ? 'active' : ''}>Not Watched</button>
-        <button onClick={() => setFilter('watched')} className={filter === 'watched' ? 'active' : ''}>Watched</button>
+        <button onClick={() => setFilter('watched')} className={filter === 'watched' ? 'active' : ''}>watched</button>
       </div>
       <div className="allshows-grid">
         {filteredShows.map(show => (

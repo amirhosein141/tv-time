@@ -1,7 +1,7 @@
 # final_project/myapp/admin.py
 
 from django.contrib import admin
-from .models import Show, Movie, Actor, Episode,UserShow, UserMovie
+from .models import Show, Movie, Actor, Episode,UserShow, UserMovie,UserEpisode
 
 class ActorAdmin(admin.ModelAdmin):
     list_display = ('name', 'birth_date')
@@ -29,8 +29,13 @@ class UserShowAdmin(admin.ModelAdmin):
 @admin.register(UserMovie)
 class UserMovieAdmin(admin.ModelAdmin):
     list_display = ('user', 'movie')    
+    
+@admin.register(UserEpisode)
+class UserEpisodesAdmin(admin.ModelAdmin):
+    list_display = ('user', 'episode')   
 
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Episode, EpisodeAdmin)
 admin.site.register(Movie, MovieAdmin)
+

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Show, Movie, Actor, Episode, UserMovie, UserShow
+from .models import Show, Movie, Actor, Episode, UserMovie, UserShow,UserEpisode
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
@@ -10,6 +10,7 @@ class ActorSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'birth_date']
 
 class EpisodeSerializer(serializers.ModelSerializer):
+    
         class Meta:
              model = Episode
              fields = '__all__'
@@ -36,14 +37,14 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'release_year', 'genres', 'description', 'actors', 'image', 'status', 'director_name', 'runtime', 'imdb_rating', 'air_date','imdb_rating','last_watched']
-        
-    def get_image(self, obj):   
+        fields = ['id', 'title', 'release_year', 'genres', 'description', 'actors', 'image', 'director_name', 'runtime', 'imdb_rating', 'air_date']
+
+    def get_image(self, obj):
         if obj.image:
             request = self.context.get('request')
             if request is not None:
                 return request.build_absolute_uri(obj.image.url)
-        return None 
+        return None
     # myapp/serializers.py
 
 
@@ -62,21 +63,21 @@ class UserSerializer(serializers.ModelSerializer):
 class UserShowSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserShow
-        fields = ['id', 'user', 'show']
+        fields = ['id', 'user', 'show', 'status']
 
 class UserMovieSerializer(serializers.ModelSerializer):
     movie_runtime = serializers.SerializerMethodField()
-    movie_status = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = UserMovie
-        fields = ['id', 'user', 'movie', 'movie_runtime', 'movie_status']
+        fields = ['id', 'user', 'movie', 'status', 'last_watched', 'movie_runtime']
 
     def get_movie_runtime(self, obj):
         return obj.movie.runtime
 
-    def get_movie_status(self, obj):
-        return obj.movie.status    
+    def get_status(self, obj):
+        return obj.status 
 
 from .models import CustomUser
 
@@ -84,3 +85,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id','username', 'profile_image']        
+        
+class UserEpisodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserEpisode
+        fields = '__all__'        

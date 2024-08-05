@@ -77,3 +77,52 @@
     margin-left: auto;
     font-size: xx-large;
 }
+@media (max-width: 768px) {
+  .allmovies-container {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .allmovies-filter-container button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .allmovies-item {
+    width: 140px;
+  }
+
+  .allmovies-back-button {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .allmovies-back-title {
+    font-size: large;
+  }
+}
+
+@media (max-width: 480px) {
+  .allmovies-container {
+    padding: 5px;
+    width: 100%;
+  }
+
+  .allmovies-filter-container button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .allmovies-item {
+    width: 120px;
+  }
+
+  .allmovies-back-button {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .allmovies-back-title {
+    font-size: medium;
+  }
+}

@@ -5,13 +5,12 @@ import './singlemovie.css';
 
 const MovieDetail = () => {
     const [movie, setMovie] = useState(null);
-    const [isInUserList, setIsInUserList] = useState(false);
-    const [userMovieId, setUserMovieId] = useState(null); // Adding userMovieId
+    const [userMovie, setUserMovie] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`https://amirghost14.pythonanywhere.com/api/movies/${id}/`)
+        axios.get(`http://127.0.0.1:8000/api/movies/${id}/`)
             .then(response => {
                 setMovie(response.data);
             })
@@ -19,8 +18,7 @@ const MovieDetail = () => {
                 console.error('There was an error fetching the movie!', error);
             });
 
-        // Check if the movie is in the user's list
-        axios.get(`https://amirghost14.pythonanywhere.com/api/user_movies/`, {
+        axios.get(`http://127.0.0.1:8000/api/user_movies/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -28,53 +26,49 @@ const MovieDetail = () => {
         .then(response => {
             const userMovies = response.data;
             const userMovie = userMovies.find(userMovie => userMovie.movie === parseInt(id));
-            if (userMovie) {
-                setIsInUserList(true);
-                setUserMovieId(userMovie.id); // Setting userMovieId
-            } else {
-                setIsInUserList(false);
-            }
+            setUserMovie(userMovie || null);
         })
         .catch(error => console.error('Error fetching user movies:', error));
     }, [id]);
 
     const handleStatusToggle = () => {
-        const newStatus = movie.status === 'watched' ? 'not_watched' : 'watched';
+        if (!userMovie) return;
 
-        axios.patch(`https://amirghost14.pythonanywhere.com/api/movies/${id}/status/`, { status: newStatus }, {
+        const newStatus = userMovie.status === 'watched' ? 'not_watched' : 'watched';
+
+        axios.patch(`http://127.0.0.1:8000/api/user_movies/${userMovie.id}/status/`, { status: newStatus }, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
         })
         .then(response => {
-            setMovie(response.data);
+            setUserMovie(prevState => ({
+                ...prevState,
+                status: response.data.status, // Ensure the correct field is updated
+            }));
         })
         .catch(error => console.error('Error updating movie status:', error));
     };
 
     const handleUserListToggle = () => {
-        const url = `https://amirghost14.pythonanywhere.com/api/user_movies/`;
+        const url = `http://127.0.0.1:8000/api/user_movies/`;
         const data = { movie: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json',
         };
 
-        if (isInUserList) {
-            // Remove movie from user's list
-            axios.delete(`${url}${userMovieId}/`, { headers }) // Using userMovieId
+        if (userMovie) {
+            axios.delete(`${url}${userMovie.id}/`, { headers })
                 .then(() => {
-                    setIsInUserList(false);
-                    setUserMovieId(null); // Resetting userMovieId
+                    setUserMovie(null);
                 })
                 .catch(error => console.error('Error removing movie from user list:', error));
         } else {
-            // Add movie to user's list
             axios.post(url, data, { headers })
                 .then(response => {
-                    setIsInUserList(true);
-                    setUserMovieId(response.data.id); // Setting userMovieId
+                    setUserMovie(response.data);
                 })
                 .catch(error => console.error('Error adding movie to user list:', error));
         }
@@ -110,18 +104,20 @@ const MovieDetail = () => {
                 <div className='single-movie-description'>
                     <p className='single-movie-description1'>{movie.description}</p>
                 </div>
-                <button 
-                    className={`status-toggle-button ${movie.status === 'watched' ? 'watched' : 'not-watched'}`} 
-                    onClick={handleStatusToggle}
-                >
-                    {movie.status === 'watched' ? '✔ Watched' : 'Not Watched'}
-                </button>
-                <button 
-                        className={`user-list-toggle-button ${isInUserList ? 'remove' : 'add'}`} 
-                        onClick={handleUserListToggle}
+                {userMovie && (
+                    <button 
+                        className={`status-toggle-button ${userMovie.status === 'watched' ? 'watched' : 'not-watched'}`} 
+                        onClick={handleStatusToggle}
                     >
-                        {isInUserList ? 'Remove Movie' : 'Add Movie'}
+                        {userMovie.status === 'watched' ? '✔ Watched' : 'Not Watched'}
                     </button>
+                )}
+                <button 
+                    className={`user-list-toggle-button ${userMovie ? 'remove' : 'add'}`} 
+                    onClick={handleUserListToggle}
+                >
+                    {userMovie ? 'Remove Movie' : 'Add Movie'}
+                </button>
                 <div className="movie-buttons-container">
                     
                 </div>

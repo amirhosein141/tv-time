@@ -59,22 +59,43 @@ def clean_imdb_rating(value):
     try:
         return float(value)
     except (ValueError, TypeError):
-        return 0.0  # مقدار پیش‌فرض مناسب
+        return 0.0 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
     release_year = models.IntegerField()
     genres = models.CharField(max_length=200)
     description = models.TextField()
-    actors = models.ManyToManyField(Actor, related_name='movies')
+    actors = models.ManyToManyField('Actor', related_name='movies')
     image = models.ImageField(upload_to='movies/', null=True, blank=True)
     director_name = models.CharField(max_length=200, default='Unknown')
-    runtime = models.IntegerField(default=0)  
-    imdb_rating = models.FloatField(default=1) 
-    last_watched=models.DateField(null=True, blank=True)
+    runtime = models.IntegerField(default=0)
+    imdb_rating = models.FloatField(default=1)
     air_date = models.DateField(default=date.today)
+
+    def __str__(self):
+        return self.title
+class UserMovie(models.Model):
     STATUS_CHOICES = [
-        ('watched','moviewatched'),
-        ('not_watched','movienotwatched'),
+        ('watched', 'Watched'),
+        ('not_watched', 'Not Watched'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='not_watched',
+    )
+    last_watched = models.DateField(null=True, blank=True)
+
+class UserEpisode(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    last_watched = models.DateField(null=True, blank=True)
+    STATUS_CHOICES = [
+        ('watched', 'Watched'),
+        ('not_watched', 'Not Watched'),
     ]
     status = models.CharField(
         max_length=20,
@@ -82,19 +103,32 @@ class Movie(models.Model):
         default='not_watched',
     )
 
+    class Meta:
+        unique_together = ('user', 'episode')
+
     def __str__(self):
-        return self.title
-
-from django.contrib.auth.models import User
-from django.db import models
-
-class UserMovie(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-
+        return f"{self.user.username} - {self.episode.title} ({self.status})"
+    
 class UserShow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ('completed', 'Show is done'),
+        ('watching', 'Still watching'),
+        ('not_watched', 'Not started'),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='not_watched',
+    )
+
+    class Meta:
+        unique_together = ('user', 'show')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.show.title} ({self.status})"
+
 
 class CustomUser(AbstractUser):
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)

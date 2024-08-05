@@ -8,12 +8,12 @@ const ShowList = () => {
     const [episodes, setEpisodes] = useState([]);
     const { id } = useParams();
     const [showEpisodes, setShowEpisodes] = useState(false);
-    const [isInUserList, setIsInUserList] = useState(false); // State to check if the show is in the user's list
-    const [userShowId, setUserShowId] = useState(null); // Adding userShowId
+    const [isInUserList, setIsInUserList] = useState(false);
+    const [userShowId, setUserShowId] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${id}/`)
+        axios.get(`http://127.0.0.1:8000/api/shows/${id}/`)
             .then(response => {
                 setShow(response.data);
             })
@@ -21,8 +21,7 @@ const ShowList = () => {
                 console.error('There was an error fetching the show!', error);
             });
 
-        // Check if the show is in the user's list
-        axios.get(`https://amirghost14.pythonanywhere.com/api/user_shows/`, {
+        axios.get(`http://127.0.0.1:8000/api/user_shows/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -32,7 +31,7 @@ const ShowList = () => {
             const userShow = userShows.find(userShow => userShow.show === parseInt(id));
             if (userShow) {
                 setIsInUserList(true);
-                setUserShowId(userShow.id); // Setting userShowId
+                setUserShowId(userShow.id);
             } else {
                 setIsInUserList(false);
             }
@@ -44,59 +43,109 @@ const ShowList = () => {
         if (showEpisodes) {
             setShowEpisodes(false);
         } else {
-            axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${id}/episodes/`)
+            axios.get(`http://127.0.0.1:8000/api/shows/${id}/episodes/`)
                 .then(response => {
                     setEpisodes(response.data);
-                    setShowEpisodes(true);
+    
+                    // Fetch the user episode status after getting the episodes
+                    axios.get(`http://127.0.0.1:8000/api/user_episodes/`, {
+                        headers: {
+                            'Authorization': `Token ${localStorage.getItem('token')}`,
+                        },
+                        params: {
+                            show_id: id,
+                        },
+                    })
+                    .then(userEpisodeResponse => {
+                        const userEpisodes = userEpisodeResponse.data;
+                        const updatedEpisodes = response.data.map(episode => {
+                            const userEpisode = userEpisodes.find(ue => ue.episode === episode.id);
+                            if (userEpisode) {
+                                return { ...episode, user_status: userEpisode.status };
+                            }
+                            return { ...episode, user_status: 'not_watched' };
+                        });
+                        setEpisodes(updatedEpisodes);
+                        setShowEpisodes(true);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user episodes:', error);
+                    });
                 })
                 .catch(error => {
                     console.error('There was an error fetching the episodes!', error);
                 });
         }
     };
+    
 
     const updateShowStatus = (newStatus) => {
-        axios.patch(`https://amirghost14.pythonanywhere.com/api/shows/${id}/status/`, { status: newStatus })
-            .then(response => {
-                setShow(prevShow => ({ ...prevShow, status: newStatus }));
-            })
-            .catch(error => {
-                console.error('Error updating show status:', error);
-            });
+        console.log(`Updating show status to ${newStatus}`);
+        axios.patch(`http://127.0.0.1:8000/api/user_shows/${userShowId}/status/`, 
+            { status: newStatus }, 
+            {
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`,
+                },
+            }
+        )
+        .then(response => {
+            setShow(prevShow => ({ ...prevShow, status: newStatus }));
+        })
+        .catch(error => {
+            console.error('Error updating show status:', error);
+        });
     };
 
     const toggleEpisodeStatus = (episodeId, currentStatus) => {
         const newStatus = currentStatus === 'watched' ? 'not_watched' : 'watched';
-        const todayDate = new Date().toISOString().split('T')[0]; // تاریخ امروز به فرمت YYYY-MM-DD
-
-        axios.patch(`https://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/status/`, { status: newStatus, last_watched: todayDate })
-            .then(response => {
-                setEpisodes(prevEpisodes =>
-                    prevEpisodes.map(ep => ep.id === episodeId ? { ...ep, status: newStatus, last_watched: todayDate } : ep)
-                );
-
-                const updatedEpisodes = episodes.map(ep =>
-                    ep.id === episodeId ? { ...ep, status: newStatus, last_watched: todayDate } : ep
-                );
-
-                const anyWatched = updatedEpisodes.some(ep => ep.status === 'watched');
-                const allWatched = updatedEpisodes.every(ep => ep.status === 'watched');
-
-                if (allWatched) {
-                    updateShowStatus('watched');
-                } else if (anyWatched) {
-                    updateShowStatus('watching');
-                } else {
-                    updateShowStatus('not_watched');
+        const todayDate = new Date().toISOString().split('T')[0];
+    
+        console.log(`Toggling episode status to ${newStatus} for episode ${episodeId}`);
+        axios.patch(`http://127.0.0.1:8000/api/user_episodes/${episodeId}/status/`, 
+            { 
+                status: newStatus, 
+                last_watched: newStatus === 'watched' ? todayDate : null 
+            },
+            {
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
                 }
-            })
-            .catch(error => {
-                console.error('Error updating episode status:', error);
-            });
+            }
+        )
+        .then(response => {
+            // به‌روزرسانی وضعیت اپیزود در state
+            setEpisodes(prevEpisodes =>
+                prevEpisodes.map(ep => 
+                    ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
+                )
+            );
+    
+            // بررسی وضعیت کلی سریال بر اساس وضعیت اپیزودها
+            const updatedEpisodes = episodes.map(ep =>
+                ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
+            );
+    
+            const anyWatched = updatedEpisodes.some(ep => ep.user_status === 'watched');
+            const allWatched = updatedEpisodes.every(ep => ep.user_status === 'watched');
+    
+            if (allWatched) {
+                updateShowStatus('watched');
+            } else if (anyWatched) {
+                updateShowStatus('watching');
+            } else {
+                updateShowStatus('not_watched');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating episode status:', error);
+        });
     };
+    
 
     const handleUserListToggle = () => {
-        const url = `https://amirghost14.pythonanywhere.com/api/user_shows/`;
+        const url = `http://127.0.0.1:8000/api/user_shows/add/`;
         const data = { show: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,
@@ -104,19 +153,22 @@ const ShowList = () => {
         };
 
         if (isInUserList) {
-            // Remove show from user's list
-            axios.delete(`${url}${userShowId}/`, { headers }) // Using userShowId
+            console.log(`Removing show with ID ${userShowId} from user's list`);
+            axios.delete(`http://127.0.0.1:8000/api/user_shows/${userShowId}/`, { headers })
                 .then(() => {
                     setIsInUserList(false);
-                    setUserShowId(null); // Resetting userShowId
+                    setUserShowId(null);
+                    setEpisodes([]);  // Clear episodes from state
                 })
                 .catch(error => console.error('Error removing show from user list:', error));
         } else {
-            // Add show to user's list
+            console.log(`Adding show with ID ${id} to user's list`);
             axios.post(url, data, { headers })
                 .then(response => {
+                    const { user_show, user_episodes } = response.data;
                     setIsInUserList(true);
-                    setUserShowId(response.data.id); // Setting userShowId
+                    setUserShowId(user_show.id);
+                    setEpisodes(user_episodes);  // Set the episodes in state
                 })
                 .catch(error => console.error('Error adding show to user list:', error));
         }
@@ -164,28 +216,29 @@ const ShowList = () => {
                 {showEpisodes && (
                     <div className="episode-list">
                         <h3>Episodes</h3>
-                        <ul>
-                            {episodes.map(episode => {
-                                const daysLeft = calculateDaysLeft(episode.air_date);
-                                const airDate = new Date(episode.air_date);
-                                const now = new Date();
-                                return (
-                                    <li key={episode.id}>
-                                        S{episode.season_number}E{episode.episode_number}: {episode.title}
-                                        {airDate > now ? (
-                                            <span className="days-left">{daysLeft} Days</span>
-                                        ) : (
-                                            <button
-                                                className={episode.status === 'watched' ? 'watched' : 'not-watched'}
-                                                onClick={() => toggleEpisodeStatus(episode.id, episode.status)}
-                                            >
-                                                {episode.status === 'watched' ? '✔' : ''}
-                                            </button>
-                                        )}
-                                    </li>
-                                );
-                            })}
-                        </ul>
+                       <ul>
+    {episodes.map(episode => {
+        const daysLeft = calculateDaysLeft(episode.air_date);
+        const airDate = new Date(episode.air_date);
+        const now = new Date();
+        return (
+            <li key={episode.id}>
+                S{episode.season_number}E{episode.episode_number}: {episode.title}
+                {airDate > now ? (
+                    <span className="days-left">{daysLeft} Days</span>
+                ) : (
+                    <button
+                        className={episode.user_status === 'watched' ? 'watched' : 'not-watched'}
+                        onClick={() => toggleEpisodeStatus(episode.id, episode.user_status)}
+                    >
+                        {episode.user_status === 'watched' ? '✔' : ''}
+                    </button>
+                )}
+            </li>
+        );
+    })}
+</ul>
+
                     </div>
                 )}
                 <button 

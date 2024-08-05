@@ -16,7 +16,7 @@ const TrackShow = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
+      const response = await axios.get('http://127.0.0.1:8000/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -24,20 +24,44 @@ const TrackShow = () => {
 
       const showsData = await Promise.all(
         response.data.map(async (userShow) => {
-          const showResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`, {
-            headers: {
-              'Authorization': `Token ${localStorage.getItem('token')}`,
-            },
-          });
-          const episodesResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
+          const showResponse = await axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
           });
 
+          const episodesResponse = await axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/episodes/`, {
+            headers: {
+              'Authorization': `Token ${localStorage.getItem('token')}`,
+            },
+          });
+
+          const userEpisodesResponse = await axios.get('http://127.0.0.1:8000/api/user_episodes/', {
+            headers: {
+              'Authorization': `Token ${localStorage.getItem('token')}`,
+            },
+            params: {
+              show_id: userShow.show,
+            },
+          });
+
+          const userEpisodesMap = userEpisodesResponse.data.reduce((acc, ep) => {
+            acc[ep.episode] = ep;
+            return acc;
+          }, {});
+
+          const episodes = episodesResponse.data.map(ep => ({
+            ...ep,
+            user_status: userEpisodesMap[ep.id]?.status || 'not_watched',
+            last_watched: userEpisodesMap[ep.id]?.last_watched || null,
+          }));
+
           return {
             ...showResponse.data,
-            episodes: episodesResponse.data,
+            episodes,
+            userEpisodes: episodes,
+            userShowId: userShow.id,
+            status: userShow.status,
           };
         })
       );
@@ -50,54 +74,108 @@ const TrackShow = () => {
 
   const toggleEpisodeStatus = async (episodeId, currentStatus, showId) => {
     const newStatus = currentStatus === 'watched' ? 'not_watched' : 'watched';
+    const todayDate = new Date().toISOString().split('T')[0];
+
     try {
-      await axios.patch(`https://amirghost14.pythonanywhere.com/api/episodes/${episodeId}/status/`, { status: newStatus }, {
-        headers: {
-          'Authorization': `Token ${localStorage.getItem('token')}`,
-        },
-      });
+        // 1. اعمال انیمیشن برای اپیزود
+        setAnimatingEpisode(episodeId);
 
-      const updatedShows = shows.map(show => {
-        if (show.id === showId) {
-          const updatedEpisodes = show.episodes.map(ep =>
-            ep.id === episodeId ? { ...ep, status: newStatus } : ep
-          );
+        // 2. منتظر ماندن به مدت 2 ثانیه
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
-          // Update show status based on episodes statuses
-          const allEpisodesWatched = updatedEpisodes.every(ep => ep.status === 'watched');
-          const anyEpisodeWatched = updatedEpisodes.some(ep => ep.status === 'watched');
-          const newShowStatus = allEpisodesWatched ? 'watched' : (anyEpisodeWatched ? 'watching' : 'not_watched');
+        // 3. آپدیت وضعیت اپیزود
+        await axios.patch(`http://127.0.0.1:8000/api/user_episodes/${episodeId}/status/`, 
+        {
+            status: newStatus,
+            last_watched: newStatus === 'watched' ? todayDate : null
+        }, 
+        {
+            headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+            },
+        });
 
-          if (show.status !== newShowStatus) {
-            axios.patch(`https://amirghost14.pythonanywhere.com/api/shows/${showId}/status/`, { status: newShowStatus }, {
-              headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`,
-              },
+        // 4. به‌روزرسانی وضعیت اپیزودها در state
+        setShows(prevShows => {
+            return prevShows.map(show => {
+                if (show.id === showId) {
+                    const updatedUserEpisodes = show.userEpisodes.map(ep =>
+                        ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
+                    );
+
+                    // بررسی وضعیت جدید سریال
+                    const allEpisodesWatched = updatedUserEpisodes.every(ep => ep.user_status === 'watched');
+                    const anyEpisodeWatched = updatedUserEpisodes.some(ep => ep.user_status === 'watched');
+                    const newShowStatus = allEpisodesWatched ? 'watched' : (anyEpisodeWatched ? 'watching' : 'not_watched');
+
+                    // اگر وضعیت سریال تغییر کرده باشد، آن را به‌روزرسانی کن
+                    if (show.status !== newShowStatus) {
+                        axios.patch(`http://127.0.0.1:8000/api/user_shows/${show.userShowId}/status/`, 
+                        { status: newShowStatus }, 
+                        {
+                            headers: {
+                            'Authorization': `Token ${localStorage.getItem('token')}`,
+                            },
+                        }).then(response => {
+                            console.log('Show status updated successfully:', response.data);
+                        }).catch(error => {
+                            console.error('Error updating show status:', error);
+                        });
+                    }
+
+                    return { ...show, userEpisodes: updatedUserEpisodes, status: newShowStatus };
+                }
+                return show;
             });
-          }
+        });
 
-          return { ...show, episodes: updatedEpisodes, status: newShowStatus };
-        }
-        return show;
-      });
-
-      setShows(updatedShows);
-      setAnimatingEpisode(episodeId);
-
-      // Remove animation class after 2 seconds
-      setTimeout(() => {
+        // 5. غیر فعال کردن انیمیشن
         setAnimatingEpisode(null);
-      }, 2000);
+
     } catch (error) {
-      console.error('Error updating episode status:', error);
+        console.error('Error updating episode status:', error);
     }
+};
+
+
+  
+  const getWatchingEpisodes = () => {
+    const watching = [];
+    const now = new Date();
+    shows.forEach(show => {
+      if (show.status === 'watching' && Array.isArray(show.userEpisodes)) {
+        const notWatched = show.userEpisodes.find(episode => episode.user_status === 'not_watched' && new Date(episode.air_date) <= now);
+        if (notWatched) {
+          const notWatchedCount = show.userEpisodes.filter(ep => ep.user_status === 'not_watched' && new Date(ep.air_date) <= now).length - 1;
+          watching.push({ ...notWatched, show_title: show.title, show_image: show.image, show_id: show.id, notWatchedCount });
+        }
+      }
+    });
+    
+    return watching;
+  };
+
+  const getNotWatchedEpisodes = () => {
+    const notWatched = [];
+    const now = new Date();
+    shows.forEach(show => {
+      if (show.status === 'not_watched' && Array.isArray(show.userEpisodes)) {
+        const firstNotWatchedEpisode = show.userEpisodes.find(episode => episode.user_status === 'not_watched' && new Date(episode.air_date) <= now);
+        if (firstNotWatchedEpisode) {
+          const notWatchedCount = show.userEpisodes.filter(ep => ep.user_status === 'not_watched' && new Date(ep.air_date) <= now).length - 1;
+          notWatched.push({ ...firstNotWatchedEpisode, show_title: show.title, show_image: show.image, show_id: show.id, notWatchedCount });
+        }
+      }
+    });
+    
+    return notWatched;
   };
 
   const getUpcomingEpisodes = () => {
     const upcoming = [];
     shows.forEach(show => {
-      if (Array.isArray(show.episodes)) {
-        show.episodes.forEach(episode => {
+      if (Array.isArray(show.userEpisodes)) {
+        show.userEpisodes.forEach(episode => {
           const airDate = new Date(episode.air_date);
           const now = new Date();
           if (airDate > now) {
@@ -107,39 +185,9 @@ const TrackShow = () => {
         });
       }
     });
+    
     return upcoming.sort((a, b) => a.daysLeft - b.daysLeft);
   };
-
-  const getWatchingEpisodes = () => {
-    const watching = [];
-    shows.forEach(show => {
-      if (show.status === 'watching' && Array.isArray(show.episodes)) {
-        const now = new Date();
-        const notWatched = show.episodes.find(episode => episode.status === 'not_watched' && new Date(episode.air_date) <= now);
-        if (notWatched) {
-          const notWatchedCount = show.episodes.filter(ep => ep.status === 'not_watched' && new Date(ep.air_date) <= now).length - 1;
-          watching.push({ ...notWatched, show_title: show.title, show_image: show.image, show_id: show.id, notWatchedCount });
-        }
-      }
-    });
-    return watching;
-  };
-
-  const getNotWatchedEpisodes = () => {
-    const notWatched = [];
-    shows.forEach(show => {
-      if (show.status === 'not_watched' && Array.isArray(show.episodes)) {
-        const now = new Date();
-        const firstNotWatchedEpisode = show.episodes.find(episode => episode.status === 'not_watched' && new Date(episode.air_date) <= now);
-        if (firstNotWatchedEpisode) {
-          const notWatchedCount = show.episodes.filter(ep => ep.status === 'not_watched' && new Date(ep.air_date) <= now).length - 1;
-          notWatched.push({ ...firstNotWatchedEpisode, show_title: show.title, show_image: show.image, show_id: show.id, notWatchedCount }); // اصلاح این خط
-        }
-      }
-    });
-    return notWatched;
-  };
-  
 
   const handleShowClick = (showId) => {
     navigate(`/singleshow/${showId}`);
@@ -152,16 +200,16 @@ const TrackShow = () => {
   const renderEpisodes = (episodes) => {
     return episodes.length > 0 ? (
       <ul>
-        {episodes.map(episode => (
+        {episodes.map((episode, index) => (
           <li
-            key={episode.id}
+            key={`${episode.id}-${index}`}
             className={animatingEpisode === episode.id ? 'animating' : ''}
           >
             <img src={episode.show_image} alt={episode.show_title} className="episode-image" onClick={() => handleShowClick(episode.show_id)} />
             <div className="episode-info">
               <h4>{episode.show_title}</h4>
               <div className="episode-details">
-                <p>S{episode.season_number} | E{episode.episode_number} 
+                <p>S{episode.season_number} | E{episode.episode_number}
                   {episode.notWatchedCount > 0 && <span className="not-watched-count">+{episode.notWatchedCount}</span>}
                 </p>
               </div>
@@ -170,23 +218,22 @@ const TrackShow = () => {
             </div>
             {filter === 'watchlist' && (
               <button
-                className={episode.status === 'watched' ? 'watched' : 'not-watched'}
-                onClick={() => toggleEpisodeStatus(episode.id, episode.status, episode.show_id)}
+                className={episode.user_status === 'watched' ? 'watched' : 'not-watched'}
+                onClick={() => toggleEpisodeStatus(episode.id, episode.user_status, episode.show_id)}
               >
-                {episode.status === 'watched' ? '✔' : ''}
+                {episode.user_status === 'watched' ? '✔' : ''}
               </button>
             )}
           </li>
         ))}
       </ul>
-    ) : null;
+    ) : <p></p>;
   };
 
   return (
     <div className="trackshow-container">
-      <button className="trackshow-back-button" onClick={() => navigate(-1)}>{'<'}</button>
       <div className="trackshow-buttons">
-        <button onClick={() => setFilter('watchlist')} className={filter === 'watchlist' ? 'active' : ''}>Watch List</button>
+        <button onClick={() => setFilter('watchlist')} className={filter === 'watchlist' ? 'active' : ''}>Watchlist</button>
         <button onClick={() => setFilter('upcoming')} className={filter === 'upcoming' ? 'active' : ''}>Upcoming</button>
       </div>
       <div className="episode-list">

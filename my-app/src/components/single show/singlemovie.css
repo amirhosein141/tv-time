@@ -181,3 +181,124 @@ body {
 .user-list-toggle-button:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
+@media (max-width: 1024px) {
+    .singlemovie-container {
+        width: 95%;
+    }
+
+    .single-movie-card {
+        height: auto;
+    }
+
+    .single-movie-title {
+        font-size: 28px;
+    }
+
+    .single-movie-image {
+        width: 280px;
+    }
+
+    .status-toggle-button {
+        font-size: 16px;
+        padding: 10px 20px;
+        top: 60px;
+        right: 30px;
+    }
+
+    .user-list-toggle-button {
+        font-size: 16px;
+        padding: 12px 12px;
+        top: 17px;
+        right: 28px; /* Center the button */
+    }
+}
+
+@media (max-width: 768px) {
+    .singlemovie-container {
+        width: 90%;
+    }
+
+    .single-movie-card {
+        padding: 15px;
+    }
+
+    .single-movie-title {
+        font-size: 24px;
+    }
+
+    .single-movie-description {
+        font-size: 16px;
+    }
+
+    .single-movie-info {
+        font-size: 16px;
+    }
+
+    .single-movie-image {
+        width: 250px;
+    }
+
+    .status-toggle-button {
+        font-size: 14px;
+        padding: 8px 16px;
+        top: 50px;
+        right: 20px;
+    }
+
+    .user-list-toggle-button {
+        font-size: 14px;
+        padding: 1px 24px;
+        top: -2px;
+        right: 21px;
+     /* Center the button */
+    }
+}
+
+@media (max-width: 480px) {
+    .singlemovie-container {
+        width: 100%;
+    }
+
+    .single-movie-card {
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .single-movie-title {
+        font-size: 20px;
+    }
+
+    .single-movie-description {
+        font-size: 14px;
+    }
+
+    .single-movie-info {
+        font-size: 14px;
+    }
+
+    .single-movie-image {
+        width: 200px;
+    }
+
+    .status-toggle-button {
+        font-size: 12px;
+        padding: 6px 12px;
+        top: 40px;
+        right: 10px;
+    }
+
+    .user-list-toggle-button {
+        font-size: 12px;
+        padding: 1px 24px;
+        top: -2px;
+        right: 21px;
+    /* Center the button */
+    }
+
+    .back-button {
+        font-size: 20px;
+        padding: 8px;
+        top: 5px;
+        right: 5px;
+    }
+}

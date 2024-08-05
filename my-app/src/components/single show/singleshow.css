@@ -210,3 +210,142 @@
 .show-list-toggle-button:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
+@media (max-width: 1200px) {
+    .single-container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 900px) {
+    .single-container {
+        width: 95%;
+    }
+
+    .single-show-card {
+        padding: 15px;
+        max-width: 700px;
+    }
+
+    .single-show-image {
+        width: 250px;
+    }
+
+    .single-show-title {
+        font-size: 30px;
+    }
+
+    .single-show-description,
+    .single-show-info li {
+        font-size: 16px;
+    }
+
+    .show-list-button {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+
+    .episode-list h3 {
+        font-size: 24px;
+    }
+
+    .episode-list li {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .show-list-toggle-button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .single-show-card {
+        flex-direction: column;
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .single-show-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .single-show-content {
+        margin-left: 0;
+    }
+
+    .single-show-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .single-show-description,
+    .single-show-info li {
+        font-size: 14px;
+    }
+
+    .show-list-button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .episode-list h3 {
+        font-size: 20px;
+    }
+
+    .episode-list li {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .singleshow-back-button {
+        top: 20px;
+        right: 20px;
+        font-size: 20px;
+        padding: 8px;
+    }
+
+    .show-list-toggle-button {
+        top: 70px;
+        right: 20px;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .single-show-title {
+        font-size: 20px;
+    }
+
+    .single-show-description,
+    .single-show-info li {
+        font-size: 12px;
+    }
+
+    .show-list-button {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .episode-list h3 {
+        font-size: 18px;
+    }
+
+    .episode-list li {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .singleshow-back-button {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .show-list-toggle-button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}

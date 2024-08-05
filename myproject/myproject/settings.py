@@ -14,7 +14,9 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -66,7 +68,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'myproject.urls'
-
+SITE_ID = 1
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -144,6 +146,7 @@ CORS_ALLOWED_ORIGINS = [
     # دامنه‌های دیگر مجاز
 ]
 import os
+
 
 # مسیر کامل به پوشه media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

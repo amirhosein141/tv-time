@@ -1,15 +1,15 @@
-.login-container0{
+/* استایل‌های اصلی موجود */
+
+.login-container0 {
   width: 900px;
   height: 100vh;
   margin: 0 auto;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../photo_2024-07-16_21-01-24.jpg'); /* عکس پس‌زمینه را اینجا قرار دهید */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../photo_2024-07-16_21-01-24.jpg');
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-
 
 .login-container {
   width: 300px;
@@ -58,4 +58,64 @@
 
 .switch-button:hover {
   color: #ff4757;
+}
+
+/* مدیا کوئری‌ها برای ریسپانسیو کردن صفحه */
+
+/* برای صفحه‌های با عرض کمتر از 900px */
+@media (max-width: 900px) {
+  .login-container0 {
+    width: 100%;
+    padding: 0 20px; /* افزودن padding برای جلوگیری از چسبیدن به لبه‌ها */
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 400px; /* حداکثر عرض برای جلوگیری از بزرگ شدن بیش از حد */
+  }
+}
+
+/* برای صفحه‌های با عرض کمتر از 600px */
+@media (max-width: 600px) {
+  .login-container0 {
+    background-size: contain; /* تغییر اندازه پس‌زمینه برای نمایش بهتر در صفحه‌های کوچکتر */
+    padding: 0 10px; /* کاهش padding */
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 320px; /* کاهش حداکثر عرض */
+  }
+
+  .login-container input {
+    width: 93%; /* استفاده از عرض کامل */
+  }
+
+  .login-container button {
+    padding: 8px; /* کاهش padding برای دکمه‌ها */
+  }
+
+  .login-container h2 {
+    font-size: medium; /* کاهش اندازه فونت عنوان */
+  }
+}
+
+/* برای صفحه‌های با عرض کمتر از 400px */
+@media (max-width: 400px) {
+  .login-container0 {
+    padding: 0 5px; /* کاهش بیشتر padding */
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 280px; /* کاهش بیشتر حداکثر عرض */
+  }
+
+  .login-container input {
+    padding: 8px; /* کاهش padding برای input‌ها */
+  }
+
+  .login-container button {
+    padding: 6px; /* کاهش بیشتر padding برای دکمه‌ها */
+  }
 }

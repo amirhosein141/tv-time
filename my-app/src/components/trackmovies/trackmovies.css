@@ -11,7 +11,7 @@
 .trackmovies-list0 {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Added for wrapping */
+    flex-wrap: wrap;
 }
 
 .trackmovies-back-button {
@@ -28,11 +28,11 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* Added for wrapping */
+    flex-wrap: wrap;
 }
 
 .trackmovies-filter-container button {
-    margin: 5px 10px; /* Adjusted margin for better spacing */
+    margin: 5px 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -49,7 +49,7 @@
 
 .trackmovies-grid {
     display: flex;
-    flex-wrap: wrap; /* Added for wrapping */
+    flex-wrap: wrap;
     gap: 20px;
     border-bottom: 1px solid rgb(67, 67, 67);
 }
@@ -60,9 +60,9 @@
     border-radius: 10px;
     text-align: center;
     width: 100%;
-    max-width: 160px; /* Ensures a max width */
+    max-width: 160px;
     background-color: black;
-    position: relative;  /* Added for positioning the text */
+    position: relative;
 }
 
 .trackmovies-item img {
@@ -93,7 +93,7 @@
     margin: 0;
     padding: 10px;
     color: #ff4757;
-    margin-left: 372px;
+    margin-left: 368px;
     font-size: xx-large;
 }
 
@@ -101,6 +101,7 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .discover-more-button {
@@ -110,21 +111,40 @@
     background-color: black;
     color: #fefefe;
     border-radius: 30px;
+    margin-bottom: 24px;
+    margin-top: 10px;
     border-style: groove;
     border-color: white;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Media Queries for responsiveness */
-@media (max-width: 768px) {
-    .trackmovies-back-button {
-        font-size: 20px;
+@media (max-width: 1200px) {
+    .trackmovies-container {
+        padding: 15px;
+        max-width: 95% !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .trackmovies-container {
+        padding: 10px;
+        max-width: 90% !important;
     }
 
-    .trackmovies-back-title {
-        font-size: large;
-        margin-left: auto;
+    .trackmovies-back-button {
+        padding: 15px;
+        font-size: 22px;
+    }
+
+    .trackmovies-filter-container button {
+        margin: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .trackmovies-grid {
+        gap: 15px;
     }
 
     .trackmovies-item {
@@ -132,25 +152,52 @@
     }
 
     .trackmovies-itemp {
-        font-size: 20px;
-        top: 190px;
+        top: 180px;
         left: 40px;
-    }
-
-    .discover-more-button {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .trackmovies-back-button {
-        font-size: 18px;
-        padding: 10px;
+        font-size: 20px;
     }
 
     .trackmovies-back-title {
-        font-size: medium;
+        font-size: x-large;
+        margin-left: 30%;
+    }
+
+    .discover-more-button {
+        padding: 8px 16px !important;
+        font-size: 14px;
         margin-left: auto;
+    }
+
+    .discover-more-container {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .trackmovies-container {
+        padding: 10px;
+        max-width: 100% !important;
+    }
+
+    .trackmovies-back-button {
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .trackmovies-filter-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trackmovies-filter-container button {
+        margin: 5px 0;
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .trackmovies-grid {
+        gap: 10px;
     }
 
     .trackmovies-item {
@@ -158,12 +205,72 @@
     }
 
     .trackmovies-itemp {
+        top: 160px;
+        left: 30px;
         font-size: 18px;
-        top: 170px;
-        left: 35px;
+    }
+
+    .trackmovies-back-title {
+        font-size: large;
+        margin-left: 20%;
     }
 
     .discover-more-button {
+        padding: 6px 12px !important;
         font-size: 12px;
+        margin-left: auto;
+    }
+
+    .discover-more-container {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .trackmovies-container {
+        padding: 5px;
+        max-width: 100% !important;
+    }
+
+    .trackmovies-back-button {
+        padding: 5px;
+        font-size: 18px;
+    }
+
+    .trackmovies-filter-container button {
+        margin: 3px 0;
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    .trackmovies-grid {
+        gap: 5px;
+    }
+
+    .trackmovies-item {
+        max-width: 100px;
+    }
+
+    .trackmovies-itemp {
+        top: 140px;
+        left: 20px;
+        font-size: 16px;
+    }
+
+    .trackmovies-back-title {
+        font-size: medium;
+        margin-left: 15%;
+    }
+
+    .discover-more-button {
+        padding: 4px 8px !important;
+        font-size: 10px;
+        margin-left: auto;
+    }
+
+    .discover-more-container {
+        justify-content: center;
+        width: 100%;
     }
 }

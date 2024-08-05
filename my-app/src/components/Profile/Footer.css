@@ -1,13 +1,17 @@
+/* Footer.css */
 .footer {
   position: fixed;
   bottom: 0;
-  width: 1100px;
+  width: 100%; /* تغییر به 100% برای ریسپانسیو بودن */
+  max-width: 1100px; /* اضافه کردن یک حداکثر عرض برای جلوگیری از بزرگ شدن فوتر در صفحه‌های بسیار بزرگ */
   border-top: 1px solid #929292;
   background-color: black;
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
+  padding: 3px 0;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  margin: 0 auto; /* وسط چین کردن فوتر */
+  box-sizing: border-box; /* اضافه کردن padding و border به محاسبه عرض کل */
 }
 
 .footer-item {
@@ -23,8 +27,35 @@
   cursor: pointer;
   padding: 10px 0;
   text-decoration: none;
+  display: block; /* برای راحتی در ریسپانسیو شدن */
 }
 
 .footer-item a:hover {
   color: #fff;
+}
+
+/* Media Queries برای دستگاه‌های کوچکتر */
+@media (max-width: 768px) {
+  .footer {
+    padding: 8px 0; /* کاهش padding برای صفحه‌های کوچکتر */
+    font-size: 14px; /* کاهش اندازه فونت برای دستگاه‌های کوچکتر */
+  }
+
+  .footer-item {
+    padding: 0 5px; /* کاهش فاصله بین آیتم‌ها */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 5px 0; /* کاهش padding بیشتر برای صفحه‌های کوچکتر */
+  }
+
+  .footer-item a {
+    font-size: 12px; /* کاهش اندازه فونت برای صفحه‌های کوچکتر */
+  }
+
+  .footer-item {
+    padding: 0 3px; /* کاهش بیشتر فاصله بین آیتم‌ها */
+  }
 }

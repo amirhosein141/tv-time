@@ -16,21 +16,21 @@ const Discover = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        axios.get('https://amirghost14.pythonanywhere.com/api/shows/')
+        axios.get('http://127.0.0.1:8000/api/shows/')
             .then(response => setShows(response.data))
             .catch(error => console.error('Error fetching shows:', error));
 
-        axios.get('https://amirghost14.pythonanywhere.com/api/movies/')
+        axios.get('http://127.0.0.1:8000/api/movies/')
             .then(response => setMovies(response.data))
             .catch(error => console.error('Error fetching movies:', error));
         
-        axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
+        axios.get('http://127.0.0.1:8000/api/user_shows/', {
             headers: { 'Authorization': `Token ${token}` }
         })
         .then(response => setAddedShows(response.data))
         .catch(error => console.error('Error fetching user shows:', error));
         
-        axios.get('https://amirghost14.pythonanywhere.com/api/user_movies/', {
+        axios.get('http://127.0.0.1:8000/api/user_movies/', {
             headers: { 'Authorization': `Token ${token}` }
         })
         .then(response => setAddedMovies(response.data))
@@ -54,19 +54,20 @@ const Discover = () => {
 
     const handleAddClick = (id, type) => {
         const token = localStorage.getItem('token');
-        const url = type === 'show' ? 'https://amirghost14.pythonanywhere.com/api/user_shows/' : 'https://amirghost14.pythonanywhere.com/api/user_movies/';
+        const url = type === 'show' ? 'http://127.0.0.1:8000/api/user_shows/add/' : 'http://127.0.0.1:8000/api/user_movies/';
         const data = type === 'show' ? { show: id } : { movie: id };
-
+    
         if (type === 'show') {
             const addedShow = addedShows.find(show => show.show === id);
             if (addedShow) {
-                axios.delete(`${url}${addedShow.id}/`, {
+                axios.delete(`http://127.0.0.1:8000/api/user_shows/${addedShow.id}/`, {
                     headers: { 'Authorization': `Token ${token}` }
                 })
                 .then(() => {
                     setAddedShows(addedShows.filter(show => show.id !== addedShow.id));
+                    setAddedEpisodes(addedEpisodes.filter(ep => ep.show !== id));  // Remove episodes of the show
                 })
-                .catch(error => console.error('Error removing show:', error.response.data));
+                .catch(error => console.error('Error removing show:', error.response?.data || error.message));
             } else {
                 axios.post(url, data, {
                     headers: { 
@@ -75,20 +76,26 @@ const Discover = () => {
                     }
                 })
                 .then(response => {
-                    setAddedShows([...addedShows, response.data]);
+                    if (response && response.data) {
+                        const { user_show, user_episodes } = response.data;
+                        setAddedShows([...addedShows, user_show]);
+                        setAddedEpisodes([...addedEpisodes, ...user_episodes]);  // Add episodes of the show
+                    } else {
+                        console.error('Unexpected response structure:', response);
+                    }
                 })
-                .catch(error => console.error('Error adding show:', error.response.data));
+                .catch(error => console.error('Error adding show:', error.response?.data || error.message));
             }
         } else {
             const addedMovie = addedMovies.find(movie => movie.movie === id);
             if (addedMovie) {
-                axios.delete(`${url}${addedMovie.id}/`, {
+                axios.delete(`http://127.0.0.1:8000/api/user_movies/${addedMovie.id}/`, {
                     headers: { 'Authorization': `Token ${token}` }
                 })
                 .then(() => {
                     setAddedMovies(addedMovies.filter(movie => movie.id !== addedMovie.id));
                 })
-                .catch(error => console.error('Error removing movie:', error.response.data));
+                .catch(error => console.error('Error removing movie:', error.response?.data || error.message));
             } else {
                 axios.post(url, data, {
                     headers: { 
@@ -97,12 +104,17 @@ const Discover = () => {
                     }
                 })
                 .then(response => {
-                    setAddedMovies([...addedMovies, response.data]);
+                    if (response && response.data) {
+                        setAddedMovies([...addedMovies, response.data]);
+                    } else {
+                        console.error('Unexpected response structure:', response);
+                    }
                 })
-                .catch(error => console.error('Error adding movie:', error.response.data));
+                .catch(error => console.error('Error adding movie:', error.response?.data || error.message));
             }
         }
     };
+    
 
     const handleShowClick = (id) => {
         navigate(`/singleshow/${id}`);

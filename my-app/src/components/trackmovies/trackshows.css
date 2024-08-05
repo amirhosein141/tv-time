@@ -173,8 +173,9 @@
     margin-top: 10px;
     border-style: groove;
     border-color: white;
-    margin-left: 454px;
+    margin-left: auto;
     margin-right: auto;
+    display: block;
 }
 
 .discover-more-button:hover {
@@ -192,4 +193,143 @@
     color: white;
     margin-left: -6px;
     font-size: 16px;
+}
+@media (max-width: 1200px) {
+    .trackshow-container {
+        padding: 15px;
+        max-width: 95% !important;
+    }
+
+    .trackshow-back-button {
+        padding: 15px;
+        font-size: 22px !important;
+    }
+
+    .trackshow-buttons button {
+        padding: 8px 16px;
+        font-size: 14px !important;
+    }
+
+    .episode-list li {
+        font-size: 16px;
+        height: 90px !important;
+    }
+
+    .episode-list li img.episode-image {
+        width: 90px;
+        height: 90px !important;
+    }
+
+    .discover-more-button {
+        padding: 8px 16px;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .trackshow-container {
+        padding: 10px;
+        max-width: 90% !important;
+    }
+
+    .trackshow-back-button {
+        padding: 10px;
+        font-size: 20px !important;
+    }
+
+    .trackshow-buttons button {
+        padding: 6px 12px;
+        font-size: 12px !important;
+    }
+
+    .episode-list li {
+        font-size: 14px;
+        height: 80px !important;
+    }
+
+    .episode-list li img.episode-image {
+        width: 80px;
+        height: 80px !important;
+    }
+
+    .discover-more-button {
+        padding: 6px 12px;
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .trackshow-container {
+        padding: 10px;
+        max-width: 100% !important;
+    }
+
+    .trackshow-back-button {
+        padding: 10px;
+        font-size: 18px !important;
+    }
+
+    .trackshow-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trackshow-buttons button {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        font-size: 10px !important;
+    }
+
+    .episode-list li {
+        font-size: 12px;
+        height: 70px !important;
+    }
+
+    .episode-list li img.episode-image {
+        width: 70px;
+        height: 70px !important;
+    }
+
+    .discover-more-button {
+        padding: 5px 10px;
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .trackshow-container {
+        padding: 5px;
+        max-width: 100% !important;
+    }
+
+    .trackshow-back-button {
+        padding: 5px;
+        font-size: 16px !important;
+    }
+
+    .trackshow-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trackshow-buttons button {
+        margin-bottom: 5px;
+        padding: 4px 8px;
+        font-size: 8px !important;
+    }
+
+    .episode-list li {
+        font-size: 10px;
+        height: 60px !important;
+    }
+
+    .episode-list li img.episode-image {
+        width: 60px;
+        height: 60px !important;
+    }
+
+    .discover-more-button {
+        padding: 4px 8px;
+        font-size: 8px !important;
+    }
 }

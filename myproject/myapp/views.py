@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from rest_framework.views import APIView, status
 from .models import Show, Movie, UserMovie, UserShow,CustomUser,Episode
 from .serializers import ShowSerializer, MovieSerializer, UserMovieSerializer, UserShowSerializer,ProfileSerializer,EpisodeSerializer
+from .models import UserEpisode
+from .serializers import UserEpisodeSerializer
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view,permission_classes
 from django.shortcuts import render
@@ -97,6 +99,19 @@ class UserProfileView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
+
+class UserEpisodeViewSet(viewsets.ModelViewSet):
+    serializer_class = UserEpisodeSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return UserEpisode.objects.filter(user=user)
+    
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def upload_profile_image(request):
@@ -170,7 +185,7 @@ def update_show_status(request, pk):
         show = Show.objects.get(pk=pk)
     except Show.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
+    logger.info(f"Received request to update status for UserShow {pk}")
     if 'status' in request.data:
         show.status = request.data['status']
         show.save()
@@ -196,3 +211,92 @@ def profile_image_upload(request):
         else:
             return JsonResponse({'error': 'No image provided'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@api_view(['PATCH'])
+def update_user_movie_status(request, pk):
+    try:
+        user_movie = UserMovie.objects.get(pk=pk, user=request.user)
+    except UserMovie.DoesNotExist:
+        return Response({'error': 'UserMovie not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    new_status = request.data.get('status')
+    if new_status not in dict(UserMovie.STATUS_CHOICES):
+        return Response({'error': 'Invalid status'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user_movie.status = new_status
+    if new_status == 'watched':
+        user_movie.last_watched = timezone.now().date()
+    else:
+        user_movie.last_watched = None
+    user_movie.save()
+
+    serializer = UserMovieSerializer(user_movie, context={'request': request})
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['PATCH'])
+def update_user_show_status(request, pk):
+    try:
+        user_show = UserShow.objects.get(pk=pk, user=request.user)
+    except UserShow.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if 'status' not in request.data:
+        return Response({'error': 'Status field is required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    user_show.status = request.data['status']
+    user_show.save()
+    
+    serializer = UserShowSerializer(user_show)
+    return Response(serializer.data)
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_user_episode_status(request, episode_id):
+    try:
+        user_episode = UserEpisode.objects.get(user=request.user, episode__id=episode_id)
+    except UserEpisode.DoesNotExist:
+        return Response({'error': 'UserEpisode not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    data = request.data
+    new_status = data.get('status', user_episode.status)
+
+    user_episode.status = new_status
+    if new_status == 'watched':
+        user_episode.last_watched = timezone.now().date()
+    else:
+        user_episode.last_watched = None
+    user_episode.save()
+
+    serializer = UserEpisodeSerializer(user_episode)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_show_with_episodes(request):
+    user = request.user
+    show_id = request.data.get('show')
+    try:
+        show = Show.objects.get(id=show_id)
+    except Show.DoesNotExist:
+        return Response({'error': 'Show not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    user_show, created = UserShow.objects.get_or_create(user=user, show=show)
+    if not created:
+        return Response({'error': 'Show already added.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Add all episodes of the show to UserEpisode
+    episodes = Episode.objects.filter(show=show)
+    user_episodes = []
+    for episode in episodes:
+        user_episode, created = UserEpisode.objects.get_or_create(user=user, episode=episode)
+        if created:
+            user_episodes.append(user_episode)
+
+    show_serializer = UserShowSerializer(user_show)
+    episode_serializer = UserEpisodeSerializer(user_episodes, many=True)
+    return Response({
+        'user_show': show_serializer.data,
+        'user_episodes': episode_serializer.data
+    }, status=status.HTTP_201_CREATED)
