@@ -1,4 +1,3 @@
-# final_project/myapp/admin.py
 
 from django.contrib import admin
 from .models import Show, Movie, Actor, Episode,UserShow, UserMovie,UserEpisode

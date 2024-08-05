@@ -11,7 +11,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center; /* این خط اضافه شده */
+    align-items: center; 
     margin-bottom: -26px;
     margin-top: -20px;
 }
@@ -133,7 +133,7 @@ p {
     }
 
     .discover-show-item, .discover-movie-item {
-        max-width: 180px; /* Adjusted for medium screens */
+        max-width: 180px; 
     }
 }
 
@@ -154,7 +154,7 @@ p {
     }
 
     .discover-show-item, .discover-movie-item {
-        max-width: 160px; /* Further adjusted for smaller screens */
+        max-width: 160px; 
     }
 }
 
@@ -171,7 +171,7 @@ p {
     }
 
     .discover-show-item, .discover-movie-item {
-        max-width: 150px; /* Adjusted for small screens */
+        max-width: 150px; 
     }
 
     .discover-h2 {
@@ -194,7 +194,7 @@ p {
     }
 
     .discover-show-item, .discover-movie-item {
-        max-width: 100%; /* Ensure items take full width on very small screens */
+        max-width: 100%; 
     }
 
     .discover-h2 {

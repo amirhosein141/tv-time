@@ -47,7 +47,7 @@ const ShowList = () => {
                 .then(response => {
                     setEpisodes(response.data);
     
-                    // Fetch the user episode status after getting the episodes
+
                     axios.get(`https://amirghost14.pythonanywhere.com/api/user_episodes/`, {
                         headers: {
                             'Authorization': `Token ${localStorage.getItem('token')}`,
@@ -115,14 +115,14 @@ const ShowList = () => {
             }
         )
         .then(response => {
-            // به‌روزرسانی وضعیت اپیزود در state
+           
             setEpisodes(prevEpisodes =>
                 prevEpisodes.map(ep => 
                     ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
                 )
             );
     
-            // بررسی وضعیت کلی سریال بر اساس وضعیت اپیزودها
+            
             const updatedEpisodes = episodes.map(ep =>
                 ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
             );
@@ -158,7 +158,7 @@ const ShowList = () => {
                 .then(() => {
                     setIsInUserList(false);
                     setUserShowId(null);
-                    setEpisodes([]);  // Clear episodes from state
+                    setEpisodes([]); 
                 })
                 .catch(error => console.error('Error removing show from user list:', error));
         } else {
@@ -168,7 +168,7 @@ const ShowList = () => {
                     const { user_show, user_episodes } = response.data;
                     setIsInUserList(true);
                     setUserShowId(user_show.id);
-                    setEpisodes(user_episodes);  // Set the episodes in state
+                    setEpisodes(user_episodes); 
                 })
                 .catch(error => console.error('Error adding show to user list:', error));
         }

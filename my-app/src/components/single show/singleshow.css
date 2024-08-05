@@ -5,22 +5,22 @@
     align-items: center;
     margin: 0 auto;
     width: 900px;
-    background-color: #121212; /* Darker background for better contrast */
+    background-color: #121212; 
     height: auto;
     padding-bottom: 20px;
     position: relative;
 }
 
 .single-show-card {
-    background-color: #1e1e1e; /* Slightly lighter than the container */
-    border-radius: 15px; /* More rounded corners for a modern look */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for better depth */
+    background-color: #1e1e1e;
+    border-radius: 15px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
     margin: 30px 0;
     padding: 20px;
-    width: 100%; /* Full width to utilize available space */
-    max-width: 800px; /* Maximum width for better responsiveness */
+    width: 100%; 
+    max-width: 800px; 
     display: flex;
-    height: auto; /* Allow content to define height */
+    height: auto; 
     flex-direction: column;
     align-items: flex-start;
 }
@@ -152,12 +152,12 @@
 }
 
 .episode-list li button.not-watched {
-    background-color: white; /* Different color for not watched */
+    background-color: white; 
     color: black;
 }
 
 .episode-list li button::before {
-    content: '✓'; /* Always display checkmark */
+    content: '✓'; 
     font-size: 20px;
     position: absolute;
     left: 50%;
@@ -168,21 +168,21 @@
     position: absolute;
     top: 36px;
     right: 30px;
-    background-color: #1e1e1e; /* Darker background for the button */
+    background-color: #1e1e1e; 
     border: none;
     color: #fff;
     font-size: 24px;
     cursor: pointer;
     padding: 10px;
-    border-radius: 50%; /* Circular button */
+    border-radius: 50%; 
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .singleshow-back-button:hover {
-    background-color: #555; /* Lighter color on hover */
+    background-color: #555; 
     transform: scale(1.1);
 }
-/* Styling for the add/remove show button */
+
 .show-list-toggle-button {
     padding: 12px 24px;
     border: none;
@@ -191,24 +191,24 @@
     font-size: 18px;
     border-radius: 30px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 10px; /* Space between status and add/remove button */
+    margin-top: 10px; 
     position: absolute;
     top: 90px;
-    right: 50px; /* Adjust the position accordingly */
+    right: 50px;
 }
 
-/* Add show button styles */
+
 .show-list-toggle-button.add {
-    background-color: #007bff; /* Blue color for add button */
+    background-color: #007bff;
 }
 
-/* Remove show button styles */
+
 .show-list-toggle-button.remove {
-    background-color: #dc3545; /* Red color for remove button */
+    background-color: #dc3545; 
 }
 
 .show-list-toggle-button:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.05); 
 }
 @media (max-width: 1200px) {
     .single-container {

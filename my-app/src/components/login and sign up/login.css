@@ -1,4 +1,4 @@
-/* استایل‌های اصلی موجود */
+
 
 .login-container0 {
   width: 900px;
@@ -60,62 +60,58 @@
   color: #ff4757;
 }
 
-/* مدیا کوئری‌ها برای ریسپانسیو کردن صفحه */
-
-/* برای صفحه‌های با عرض کمتر از 900px */
 @media (max-width: 900px) {
   .login-container0 {
     width: 100%;
-    padding: 0 20px; /* افزودن padding برای جلوگیری از چسبیدن به لبه‌ها */
+    padding: 0 20px; 
   }
 
   .login-container {
     width: 100%;
-    max-width: 400px; /* حداکثر عرض برای جلوگیری از بزرگ شدن بیش از حد */
+    max-width: 400px; 
   }
 }
 
-/* برای صفحه‌های با عرض کمتر از 600px */
 @media (max-width: 600px) {
   .login-container0 {
-    background-size: contain; /* تغییر اندازه پس‌زمینه برای نمایش بهتر در صفحه‌های کوچکتر */
-    padding: 0 10px; /* کاهش padding */
+    background-size: contain; 
+    padding: 0 10px;
   }
 
   .login-container {
     width: 100%;
-    max-width: 320px; /* کاهش حداکثر عرض */
+    max-width: 320px; 
   }
 
   .login-container input {
-    width: 93%; /* استفاده از عرض کامل */
+    width: 93%; 
   }
 
   .login-container button {
-    padding: 8px; /* کاهش padding برای دکمه‌ها */
+    padding: 8px;
   }
 
   .login-container h2 {
-    font-size: medium; /* کاهش اندازه فونت عنوان */
+    font-size: medium; 
   }
 }
 
-/* برای صفحه‌های با عرض کمتر از 400px */
+
 @media (max-width: 400px) {
   .login-container0 {
-    padding: 0 5px; /* کاهش بیشتر padding */
+    padding: 0 5px; 
   }
 
   .login-container {
     width: 100%;
-    max-width: 280px; /* کاهش بیشتر حداکثر عرض */
+    max-width: 280px; 
   }
 
   .login-container input {
-    padding: 8px; /* کاهش padding برای input‌ها */
+    padding: 8px; 
   }
 
   .login-container button {
-    padding: 6px; /* کاهش بیشتر padding برای دکمه‌ها */
+    padding: 6px; 
   }
 }

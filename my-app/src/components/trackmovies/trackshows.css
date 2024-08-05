@@ -74,7 +74,7 @@
     position: relative;
 }
 .episode-list li.animating {
-    background-color: #4CAF50; /* سبز */
+    background-color: #4CAF50;
     color: white;
     transition: background-color 0.5s ease-in-out;
 }

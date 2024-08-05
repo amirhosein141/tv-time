@@ -30,7 +30,7 @@ const Shows = () => {
         throw new Error('Error fetching user shows');
       }
       const data = await response.json();
-      console.log("User shows data received:", data); // لاگ جدید
+      console.log("User shows data received:", data);
       setUserShows(data);
     } catch (error) {
       setError(error.message);
@@ -49,12 +49,12 @@ const Shows = () => {
           })
           .then(show => ({
             ...show,
-            status: userShow.status, // اضافه کردن status به اطلاعات show
+            status: userShow.status, 
           }))
       );
 
       const showData = await Promise.all(showRequests);
-      console.log("All show data processed:", showData); // لاگ جدید
+      console.log("All show data processed:", showData);
 
       const sortedShows = showData.sort((a, b) => {
         const statusOrder = {
@@ -65,7 +65,7 @@ const Shows = () => {
         return statusOrder[a.status] - statusOrder[b.status];
       });
       
-      console.log("Sorted shows:", sortedShows); // لاگ جدید
+      console.log("Sorted shows:", sortedShows);
       setShows(sortedShows);
     } catch (error) {
       setError(error.message);

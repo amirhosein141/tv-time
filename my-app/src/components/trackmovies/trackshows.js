@@ -77,13 +77,13 @@ const TrackShow = () => {
     const todayDate = new Date().toISOString().split('T')[0];
 
     try {
-        // 1. اعمال انیمیشن برای اپیزود
+      
         setAnimatingEpisode(episodeId);
 
-        // 2. منتظر ماندن به مدت 2 ثانیه
+        
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // 3. آپدیت وضعیت اپیزود
+       
         await axios.patch(`https://amirghost14.pythonanywhere.com/api/user_episodes/${episodeId}/status/`, 
         {
             status: newStatus,
@@ -95,7 +95,7 @@ const TrackShow = () => {
             },
         });
 
-        // 4. به‌روزرسانی وضعیت اپیزودها در state
+      
         setShows(prevShows => {
             return prevShows.map(show => {
                 if (show.id === showId) {
@@ -103,12 +103,12 @@ const TrackShow = () => {
                         ep.id === episodeId ? { ...ep, user_status: newStatus, last_watched: newStatus === 'watched' ? todayDate : null } : ep
                     );
 
-                    // بررسی وضعیت جدید سریال
+                    
                     const allEpisodesWatched = updatedUserEpisodes.every(ep => ep.user_status === 'watched');
                     const anyEpisodeWatched = updatedUserEpisodes.some(ep => ep.user_status === 'watched');
                     const newShowStatus = allEpisodesWatched ? 'watched' : (anyEpisodeWatched ? 'watching' : 'not_watched');
 
-                    // اگر وضعیت سریال تغییر کرده باشد، آن را به‌روزرسانی کن
+                   
                     if (show.status !== newShowStatus) {
                         axios.patch(`https://amirghost14.pythonanywhere.com/api/user_shows/${show.userShowId}/status/`, 
                         { status: newShowStatus }, 
@@ -129,7 +129,7 @@ const TrackShow = () => {
             });
         });
 
-        // 5. غیر فعال کردن انیمیشن
+        
         setAnimatingEpisode(null);
 
     } catch (error) {

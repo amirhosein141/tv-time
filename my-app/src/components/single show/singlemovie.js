@@ -45,7 +45,7 @@ const MovieDetail = () => {
         .then(response => {
             setUserMovie(prevState => ({
                 ...prevState,
-                status: response.data.status, // Ensure the correct field is updated
+                status: response.data.status, 
             }));
         })
         .catch(error => console.error('Error updating movie status:', error));

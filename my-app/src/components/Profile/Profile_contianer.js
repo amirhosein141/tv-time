@@ -1,4 +1,4 @@
-// src/components/Profile/ProfileContainer.js
+
 import React from 'react';
 import Header from '../Profile/Header';
 import Stats from '../Profile/Stats';

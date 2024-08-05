@@ -27,12 +27,12 @@ const AllShows = () => {
       });
       const userShows = response.data;
 
-      // ساختن لیست درخواست‌ها برای دریافت داده‌های مربوط به هر سریال
+
       const showRequests = userShows.map(userShow =>
         axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
           .then(response => ({
             ...response.data,
-            status: userShow.status // اضافه کردن status به داده‌های سریال
+            status: userShow.status 
           }))
       );
 
@@ -56,7 +56,7 @@ const AllShows = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1); // هدایت به صفحه قبلی
+    navigate(-1); 
   };
 
   return (

@@ -36,7 +36,7 @@ const TrackMovies = () => {
           .then(response => ({
             ...response.data,
             status: userMovie.status,
-            air_date: userMovie.air_date || response.data.air_date // Ensure air_date is correctly set
+            air_date: userMovie.air_date || response.data.air_date 
           }))
       );
 
@@ -74,11 +74,11 @@ const TrackMovies = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1); // بازگشت به صفحه قبلی
+    navigate(-1);
   };
 
   const handleDiscoverClick = () => {
-    navigate('/discover'); // هدایت به صفحه Discover
+    navigate('/discover');
   };
 
   return (

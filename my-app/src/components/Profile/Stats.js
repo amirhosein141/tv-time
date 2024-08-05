@@ -29,7 +29,7 @@ const Stats = () => {
         if (userMovie.status === 'watched') {
           watchedMoviesCount += 1;
           if (userMovie.movie_runtime) {
-            totalMovieTime += userMovie.movie_runtime; // فرض می‌کنیم movie_runtime به دقیقه است
+            totalMovieTime += userMovie.movie_runtime; 
           }
         }
       });
@@ -65,18 +65,18 @@ const Stats = () => {
 
         let totalEpisodes = 0;
         let totalTvTime = 0;
-        const avgEpisodeTime = 50; // زمان ثابت هر اپیزود به دقیقه
+        const avgEpisodeTime = 50; 
 
         response.data.forEach(userEpisode => {
             if (userEpisode.status === 'watched') {
                 totalEpisodes += 1;
-                totalTvTime += avgEpisodeTime; // افزودن 50 دقیقه به کل زمان تماشای تلویزیون
+                totalTvTime += avgEpisodeTime; 
             }
         });
 
-        const tvHours = Math.floor(totalTvTime / 60); // تبدیل زمان از دقیقه به ساعت
-        const tvDays = Math.floor(tvHours / 24); // تبدیل زمان از ساعت به روز
-        const tvMonths = Math.floor(tvDays / 30); // تبدیل زمان از روز به ماه
+        const tvHours = Math.floor(totalTvTime / 60); 
+        const tvDays = Math.floor(tvHours / 24); 
+        const tvMonths = Math.floor(tvDays / 30); 
 
         setEpisodesWatched(totalEpisodes);
         setTvTime({

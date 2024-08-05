@@ -40,7 +40,7 @@ const Movies = () => {
       Promise.all(movieRequests)
         .then(movieData => {
           movieData.sort((a, b) => new Date(b.last_watched) - new Date(a.last_watched));
-          setMovies(movieData.slice(0, 6)); // محدود کردن تعداد فیلم‌ها به 6 تا
+          setMovies(movieData.slice(0, 6)); 
         })
         .catch(error => console.error('Error fetching movies:', error));
     }

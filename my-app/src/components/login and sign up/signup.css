@@ -2,7 +2,7 @@
     width: 900px;
     height: 100vh;
     margin: 0 auto;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../photo_2024-07-16_21-01-24.jpg'); /* عکس پس‌زمینه را اینجا قرار دهید */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../photo_2024-07-16_21-01-24.jpg'); 
     background-size: cover;
     display: flex;
     justify-content: center;

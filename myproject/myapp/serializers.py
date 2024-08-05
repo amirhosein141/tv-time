@@ -24,7 +24,7 @@ class ShowSerializer(serializers.ModelSerializer):
         model = Show
         fields = ['id', 'title', 'start_year', 'genres', 'seasons', 'platform', 'description', 'average_episode_duration', 'actors', 'episodes', 'image','status','imdb_rating']
     def get_image(self, obj):
-        # Assuming the `image` field is a FileField or ImageField
+        
         if obj.image:
             request = self.context.get('request')
             if request is not None:
@@ -45,7 +45,7 @@ class MovieSerializer(serializers.ModelSerializer):
             if request is not None:
                 return request.build_absolute_uri(obj.image.url)
         return None
-    # myapp/serializers.py
+   
 
 
 class UserSerializer(serializers.ModelSerializer):

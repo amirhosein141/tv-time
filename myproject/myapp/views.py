@@ -34,7 +34,7 @@ class UserMovieViewSet(viewsets.ModelViewSet):
 class UserShowViewSet(viewsets.ModelViewSet):
     queryset = UserShow.objects.all()
     serializer_class = UserShowSerializer
-# ویو ساده برای صفحه اصلی
+
 
 
 def home(request):
@@ -119,7 +119,7 @@ def upload_profile_image(request):
     if 'profile_image' in request.FILES:
         user.profile_image = request.FILES['profile_image']
         user.save()
-        # بعد از ذخیره، فایل باید یک URL داشته باشد
+      
         if user.profile_image and hasattr(user.profile_image, 'url'):
             profile_image_url = user.profile_image.url
             return JsonResponse({'profile_image': profile_image_url})
@@ -192,18 +192,18 @@ def update_show_status(request, pk):
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# نمونه‌ای از پیاده‌سازی در Django
+
 
 @csrf_exempt
 def profile_image_upload(request):
     if request.method == 'POST':
         profile_image = request.FILES.get('profile_image')
         if profile_image:
-            # مسیر ذخیره‌سازی
+    
             path = default_storage.save(f'profile_images/{profile_image.name}', ContentFile(profile_image.read()))
             profile_image_url = default_storage.url(path)
 
-            # به‌روزرسانی مدل کاربر با URL جدید
+        
             request.user.profile.profile_image = profile_image_url
             request.user.profile.save()
 
@@ -286,7 +286,7 @@ def add_show_with_episodes(request):
     if not created:
         return Response({'error': 'Show already added.'}, status=status.HTTP_400_BAD_REQUEST)
     
-    # Add all episodes of the show to UserEpisode
+
     episodes = Episode.objects.filter(show=show)
     user_episodes = []
     for episode in episodes:

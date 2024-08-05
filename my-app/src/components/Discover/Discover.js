@@ -11,7 +11,7 @@ const Discover = () => {
     const [search, setSearch] = useState('');
     const [addedShows, setAddedShows] = useState([]);
     const [addedMovies, setAddedMovies] = useState([]);
-    const [addedEpisodes, setAddedEpisodes] = useState([]);  // اضافه کردن متغیرهای جدید
+    const [addedEpisodes, setAddedEpisodes] = useState([]); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Discover = () => {
                 })
                 .then(() => {
                     setAddedShows(addedShows.filter(show => show.id !== addedShow.id));
-                    setAddedEpisodes(addedEpisodes.filter(ep => ep.show !== id));  // Remove episodes of the show
+                    setAddedEpisodes(addedEpisodes.filter(ep => ep.show !== id)); 
                 })
                 .catch(error => console.error('Error removing show:', error.response?.data || error.message));
             } else {
@@ -80,7 +80,7 @@ const Discover = () => {
                     if (response && response.data) {
                         const { user_show, user_episodes } = response.data;
                         setAddedShows([...addedShows, user_show]);
-                        setAddedEpisodes([...addedEpisodes, ...user_episodes]);  // Add episodes of the show
+                        setAddedEpisodes([...addedEpisodes, ...user_episodes]);
                     } else {
                         console.error('Unexpected response structure:', response);
                     }
