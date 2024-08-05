@@ -11,6 +11,7 @@ const Discover = () => {
     const [search, setSearch] = useState('');
     const [addedShows, setAddedShows] = useState([]);
     const [addedMovies, setAddedMovies] = useState([]);
+    const [addedEpisodes, setAddedEpisodes] = useState([]);  // اضافه کردن متغیرهای جدید
     const navigate = useNavigate();
 
     useEffect(() => {
