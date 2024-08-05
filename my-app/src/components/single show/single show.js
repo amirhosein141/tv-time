@@ -13,7 +13,7 @@ const ShowList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/shows/${id}/`)
+        axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${id}/`)
             .then(response => {
                 setShow(response.data);
             })
@@ -21,7 +21,7 @@ const ShowList = () => {
                 console.error('There was an error fetching the show!', error);
             });
 
-        axios.get(`http://127.0.0.1:8000/api/user_shows/`, {
+        axios.get(`https://amirghost14.pythonanywhere.com/api/user_shows/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -43,12 +43,12 @@ const ShowList = () => {
         if (showEpisodes) {
             setShowEpisodes(false);
         } else {
-            axios.get(`http://127.0.0.1:8000/api/shows/${id}/episodes/`)
+            axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${id}/episodes/`)
                 .then(response => {
                     setEpisodes(response.data);
     
                     // Fetch the user episode status after getting the episodes
-                    axios.get(`http://127.0.0.1:8000/api/user_episodes/`, {
+                    axios.get(`https://amirghost14.pythonanywhere.com/api/user_episodes/`, {
                         headers: {
                             'Authorization': `Token ${localStorage.getItem('token')}`,
                         },
@@ -81,7 +81,7 @@ const ShowList = () => {
 
     const updateShowStatus = (newStatus) => {
         console.log(`Updating show status to ${newStatus}`);
-        axios.patch(`http://127.0.0.1:8000/api/user_shows/${userShowId}/status/`, 
+        axios.patch(`https://amirghost14.pythonanywhere.com/api/user_shows/${userShowId}/status/`, 
             { status: newStatus }, 
             {
                 headers: {
@@ -102,7 +102,7 @@ const ShowList = () => {
         const todayDate = new Date().toISOString().split('T')[0];
     
         console.log(`Toggling episode status to ${newStatus} for episode ${episodeId}`);
-        axios.patch(`http://127.0.0.1:8000/api/user_episodes/${episodeId}/status/`, 
+        axios.patch(`https://amirghost14.pythonanywhere.com/api/user_episodes/${episodeId}/status/`, 
             { 
                 status: newStatus, 
                 last_watched: newStatus === 'watched' ? todayDate : null 
@@ -145,7 +145,7 @@ const ShowList = () => {
     
 
     const handleUserListToggle = () => {
-        const url = `http://127.0.0.1:8000/api/user_shows/add/`;
+        const url = `https://amirghost14.pythonanywhere.com/api/user_shows/add/`;
         const data = { show: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,
@@ -154,7 +154,7 @@ const ShowList = () => {
 
         if (isInUserList) {
             console.log(`Removing show with ID ${userShowId} from user's list`);
-            axios.delete(`http://127.0.0.1:8000/api/user_shows/${userShowId}/`, { headers })
+            axios.delete(`https://amirghost14.pythonanywhere.com/api/user_shows/${userShowId}/`, { headers })
                 .then(() => {
                     setIsInUserList(false);
                     setUserShowId(null);

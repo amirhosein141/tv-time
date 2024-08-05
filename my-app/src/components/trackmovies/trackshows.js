@@ -16,7 +16,7 @@ const TrackShow = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user_shows/', {
+      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -24,19 +24,19 @@ const TrackShow = () => {
 
       const showsData = await Promise.all(
         response.data.map(async (userShow) => {
-          const showResponse = await axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/`, {
+          const showResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
           });
 
-          const episodesResponse = await axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/episodes/`, {
+          const episodesResponse = await axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/episodes/`, {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
           });
 
-          const userEpisodesResponse = await axios.get('http://127.0.0.1:8000/api/user_episodes/', {
+          const userEpisodesResponse = await axios.get('https://amirghost14.pythonanywhere.com/api/user_episodes/', {
             headers: {
               'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -84,7 +84,7 @@ const TrackShow = () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // 3. آپدیت وضعیت اپیزود
-        await axios.patch(`http://127.0.0.1:8000/api/user_episodes/${episodeId}/status/`, 
+        await axios.patch(`https://amirghost14.pythonanywhere.com/api/user_episodes/${episodeId}/status/`, 
         {
             status: newStatus,
             last_watched: newStatus === 'watched' ? todayDate : null
@@ -110,7 +110,7 @@ const TrackShow = () => {
 
                     // اگر وضعیت سریال تغییر کرده باشد، آن را به‌روزرسانی کن
                     if (show.status !== newShowStatus) {
-                        axios.patch(`http://127.0.0.1:8000/api/user_shows/${show.userShowId}/status/`, 
+                        axios.patch(`https://amirghost14.pythonanywhere.com/api/user_shows/${show.userShowId}/status/`, 
                         { status: newShowStatus }, 
                         {
                             headers: {

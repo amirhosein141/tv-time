@@ -15,7 +15,7 @@ const Stats = () => {
 
   const fetchUserMovies = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user_movies/', {
+      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_movies/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -56,7 +56,7 @@ const Stats = () => {
 
   const fetchUserShows = async () => {
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/user_episodes/', {
+        const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_episodes/', {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },

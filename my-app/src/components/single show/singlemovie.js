@@ -10,7 +10,7 @@ const MovieDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/movies/${id}/`)
+        axios.get(`https://amirghost14.pythonanywhere.com/api/movies/${id}/`)
             .then(response => {
                 setMovie(response.data);
             })
@@ -18,7 +18,7 @@ const MovieDetail = () => {
                 console.error('There was an error fetching the movie!', error);
             });
 
-        axios.get(`http://127.0.0.1:8000/api/user_movies/`, {
+        axios.get(`https://amirghost14.pythonanywhere.com/api/user_movies/`, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
@@ -36,7 +36,7 @@ const MovieDetail = () => {
 
         const newStatus = userMovie.status === 'watched' ? 'not_watched' : 'watched';
 
-        axios.patch(`http://127.0.0.1:8000/api/user_movies/${userMovie.id}/status/`, { status: newStatus }, {
+        axios.patch(`https://amirghost14.pythonanywhere.com/api/user_movies/${userMovie.id}/status/`, { status: newStatus }, {
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const MovieDetail = () => {
     };
 
     const handleUserListToggle = () => {
-        const url = `http://127.0.0.1:8000/api/user_movies/`;
+        const url = `https://amirghost14.pythonanywhere.com/api/user_movies/`;
         const data = { movie: id };
         const headers = {
             'Authorization': `Token ${localStorage.getItem('token')}`,

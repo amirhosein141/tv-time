@@ -12,12 +12,12 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:8000/api/register/', {
+            await axios.post('https://amirghost14.pythonanywhere.com/api/register/', {
                 username,
                 email,
                 password
             });
-            const loginResponse = await axios.post('http://127.0.0.1:8000/api/login/', {
+            const loginResponse = await axios.post('https://amirghost14.pythonanywhere.com/api/login/', {
                 username,
                 password
             });

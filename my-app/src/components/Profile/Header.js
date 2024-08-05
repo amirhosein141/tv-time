@@ -6,7 +6,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/user/profile/', {
+    fetch('https://amirghost14.pythonanywhere.com/api/user/profile/', {
       method: 'GET',
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}` // assuming you're storing the token in localStorage
@@ -22,7 +22,7 @@ const Header = () => {
     const formData = new FormData();
     formData.append('profile_image', file);
 
-    fetch('http://127.0.0.1:8000/api/user/profile/upload/', {
+    fetch('https://amirghost14.pythonanywhere.com/api/user/profile/upload/', {
       method: 'POST',
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`

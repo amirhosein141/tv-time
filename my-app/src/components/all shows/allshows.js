@@ -20,7 +20,7 @@ const AllShows = () => {
 
   const fetchUserShows = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user_shows/', {
+      const response = await axios.get('https://amirghost14.pythonanywhere.com/api/user_shows/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`,
         },
@@ -29,7 +29,7 @@ const AllShows = () => {
 
       // ساختن لیست درخواست‌ها برای دریافت داده‌های مربوط به هر سریال
       const showRequests = userShows.map(userShow =>
-        axios.get(`http://127.0.0.1:8000/api/shows/${userShow.show}/`)
+        axios.get(`https://amirghost14.pythonanywhere.com/api/shows/${userShow.show}/`)
           .then(response => ({
             ...response.data,
             status: userShow.status // اضافه کردن status به داده‌های سریال
